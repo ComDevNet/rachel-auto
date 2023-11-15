@@ -17,3 +17,5 @@ chmod +x connect-vpn.sh
 chmod +x vpn-connection.sh
 chmod +x download-logs.sh
 chmod +x update-script.sh
+
+exec ./main.sh
