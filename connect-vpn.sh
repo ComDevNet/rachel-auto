@@ -10,7 +10,7 @@ sudo zerotier-cli join "$network_id"
 sudo touch "/var/lib/zerotier-one/networks.d/$network_id.conf"
 
 # Display a success message and wait for 5 seconds
-echo "ZeroTier network joined successfully. Returning to the main script in 3 seconds..."
+echo "ZeroTier network joined successfully. Returning to the main menu in 3 seconds..."
 sleep 3
 
 # Return to the main script

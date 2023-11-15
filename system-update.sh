@@ -9,5 +9,10 @@ sudo date --set="$user_datetime"
 # Update the system
 sudo apt update && sudo apt upgrade -y
 
+# Display a message about the update
+echo "System has been updated successfully."
+echo "Returning to the main menu in 3 seconds..."
+sleep 3
+
 # Return to the main script
 exec ./main.sh

@@ -24,9 +24,9 @@ read -p "Do you want to update to the latest release? (y/n): " user_response
 if [ "$user_response" == "y" ]; then
     # Perform a git pull
     sudo git pull
-    echo "New release pulled successfully."
+    echo "New release pulled successfully. Returning to the main menu in 3 seconds..."
 else
-    echo "Interface is the latest version."
+    echo "Interface is the latest version. Returning to the main menu in 3 seconds..."
 fi
 
 sleep 3
