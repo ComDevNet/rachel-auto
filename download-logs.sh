@@ -44,6 +44,9 @@ cd ..
 # Gzip the new folder
 tar -czf "$new_folder.tar.gz" "$new_folder"
 
+# move the tar.gz file to a folder called logs
+mv "$new_folder.tar.gz" ./00_LOGS
+
 # Display a message about the created gzip file
 echo "Access log files have been processed and saved in the file: $new_folder.tar.gz"
 echo "File is ready for download."

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Save the current directory
+current_directory=$(pwd)
+
 # Move to the /var/www/ directory
 cd /var/www/ || exit
 
@@ -29,6 +32,7 @@ else
     echo "Interface is the latest version. Returning to the main menu in 3 seconds..."
 fi
 
+cd "$current_directory"
 sleep 3
 # Return to the main script
 exec ./main.sh
