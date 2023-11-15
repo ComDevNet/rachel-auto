@@ -50,15 +50,15 @@ mv "$new_folder.tar.gz" "00_LOGS"
 
 # Display a message about the created gzip file
 echo "Access log files have been processed and saved in the file: $new_folder.tar.gz"
-echo "File is ready for download."
+echo "File is ready for download and is located in the 00_LOGS directory."
 echo ""
 
 
 # Cleanup: Remove the temporary folder and its contents
 rm -rf "$new_folder"
 echo "Temporary folder has been removed."
-echo "Returning to the main menu in 3 seconds..."
+echo "Returning to the main menu in 5 seconds..."
 
 # exit to main menu
-sleep 3
+sleep 5
 exec ./main.sh
