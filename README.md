@@ -28,3 +28,4 @@ chmod +x install.sh
 - [x] Update Script
 - [ ] Process Logs -> (Download Logs v2)
 - [ ] Upload Logs to Server
+- [ ] Download Content Request File
