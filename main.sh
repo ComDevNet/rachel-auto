@@ -28,7 +28,7 @@ echo "1. System Update"
 echo "2. Update Rachel Interface"
 echo "3. Connect VPN"
 echo "4. Check VPN Connection"
-echo "5. Download Logs"
+echo "5. Download Rachel Logs"
 echo -e "${GREEN}6. Update Script"
 echo -e "${RED}7. Exit"
 
