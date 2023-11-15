@@ -47,6 +47,7 @@ tar -czf "$new_folder.tar.gz" "$new_folder"
 # Display a message about the created gzip file
 echo "Access log files have been processed and saved in the file: $new_folder.tar.gz"
 echo "File is ready for download."
+echo ""
 
 
 # Cleanup: Remove the temporary folder and its contents
