@@ -7,6 +7,7 @@ current_directory=$(pwd)
 cd "$(dirname "$0")" || exit
 
 # Pull the latest changes from GitHub
+git reset --hard HEAD
 git pull
 
 # Check if the pull was successful
