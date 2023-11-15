@@ -16,10 +16,10 @@ if [ $? -eq 0 ]; then
     echo "Returning to the main menu in 3 seconds..."
 else
     echo "Failed to update the script. Please check for updates manually."
-    echo "Returning to the main menu in 3 seconds..."
+    echo "Returning to the main menu in 5 seconds..."
 fi
 
 # Return to the original directory
 cd "$current_directory"
-sleep 3
+sleep 5
 exec ./main.sh
