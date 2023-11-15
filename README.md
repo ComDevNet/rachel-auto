@@ -14,3 +14,10 @@ chmod +x install.sh
 ```
 ./main.sh
 ```
+## Things Automated
+- [x] Update the system
+- [x] Update the Rachel Interface
+- [x] Connect VPN
+- [x] Check VPN Status
+- [x] Download Logs
+- [x] Update Script
