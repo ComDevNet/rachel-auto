@@ -45,6 +45,7 @@ cd ..
 tar -czf "$new_folder.tar.gz" "$new_folder"
 
 # move the tar.gz file to a folder called logs
+mkdir 00_LOGS
 mv "$new_folder.tar.gz" ./00_LOGS
 
 # Display a message about the created gzip file
@@ -56,7 +57,7 @@ echo ""
 # Cleanup: Remove the temporary folder and its contents
 rm -rf "$new_folder"
 echo "Temporary folder has been removed."
-echo "Returning to the main script in 3 seconds..."
+echo "Returning to the main menu in 3 seconds..."
 
 # exit to main menu
 sleep 3
