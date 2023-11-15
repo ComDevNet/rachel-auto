@@ -14,3 +14,6 @@ chmod +x exit.sh
 chmod +x system-update.sh
 chmod +x interface-update.sh
 chmod +x connect-vpn.sh
+chmod +x vpn-connection.sh
+chmod +x download-logs.sh
+chmod +x update-script.sh
