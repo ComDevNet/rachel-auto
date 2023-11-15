@@ -13,7 +13,7 @@ git pull
 # Check if the pull was successful
 if [ $? -eq 0 ]; then
     echo "Script updated successfully."
-    echo "Returning to the main menu in 3 seconds..."
+    echo "Returning to the main menu in 5 seconds..."
 else
     echo "Failed to update the script. Please check for updates manually."
     echo "Returning to the main menu in 5 seconds..."
