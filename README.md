@@ -29,3 +29,4 @@ chmod +x install.sh
 - [ ] Process Logs -> (Download Logs v2)
 - [ ] Upload Logs to Server
 - [ ] Download Content Request File
+- [ ] Change Interface
