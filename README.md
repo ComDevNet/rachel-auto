@@ -30,3 +30,4 @@ chmod +x install.sh
 - [ ] Upload Logs to Server
 - [ ] Download Content Request File
 - [ ] Change Interface
+- [ ] System Settings
