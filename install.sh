@@ -11,7 +11,7 @@ sudo mv 3d.flf /usr/share/figlet/
 # make the scripts executable
 chmod +x main.sh
 chmod +x exit.sh
-chmod +x system-update.sh
+chmod +x update-system.sh
 chmod +x interface-update.sh
 chmod +x connect-vpn.sh
 chmod +x vpn-connection.sh
