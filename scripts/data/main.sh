@@ -12,9 +12,9 @@ figlet -c -t -f 3d "DATA" | lolcat
 echo ""
 
 # A border to cover the description and its centered
-echo  "========================================"
-echo "Collect and Process all your data, then pick to upload to a server or not"
-echo "========================================"
+echo  "=============================================================="
+echo "Collect, Process, and Upload all your data to a server or not"
+echo "=============================================================="
 
 echo ""
 
@@ -24,30 +24,38 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Connect"
-echo "2. Status"
-echo -e "${GREEN}3. Go Back"
-echo -e "${RED}4. Exit"
+echo "1. Collect Logs"
+echo "2. Collect Request File"
+echo "3. Process Logs"
+echo "4. Upload Data"
+echo -e "${GREEN}5. Go Back"
+echo -e "${RED}6. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-4): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
     1)
-        ./scripts/vpn/connect.sh
+        ./scripts/data/collect-logs.sh
         ;;
     2)
-        ./scripts/vpn/status.sh
+        ./scripts/data/collect-requests.sh
         ;;
     3)
-        ./main.sh
+        ./scripts/data/process.sh
         ;;
     4)
+        ./scripts/data/upload.sh
+        ;;
+    5)
+        ./main.sh
+        ;;
+    6)
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 4."
+        echo "Invalid choice. Please choose a number between 1 and 6."
         ;;
 esac

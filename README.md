@@ -33,4 +33,3 @@ chmod +x install.sh
 - [ ] Process Logs
 - [ ] Upload Logs to Server
 - [ ] Collect Content Request File
-- [ ] upload log data to server

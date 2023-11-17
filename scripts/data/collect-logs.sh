@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script collects access log files from the apache log folder, renames them and keeps them organized
+
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
 
@@ -41,27 +43,19 @@ done
 # Move back to the original directory
 cd ..
 
-# Gzip the new folder
-tar -czf "$new_folder.tar.gz" "$new_folder"
-
-# move the tar.gz file to a folder called logs
+# move the folder to a folder called logs
 # Check if the "00_LOGS" folder exists, and create it if not
-if [ ! -d "00_LOGS" ]; then
-    mkdir "00_LOGS"
+if [ ! -d "00_DATA" ]; then
+    mkdir "00_DATA"
 fi
-mv "$new_folder.tar.gz" "00_LOGS"
+mv "$new_folder" "00_DATA"
 
 # Display a message about the created gzip file
-echo "Access log files have been processed and saved in the file: $new_folder.tar.gz"
-echo "File is ready for download and is located in the 00_LOGS directory."
+echo "Logs are ready in the 00_DATA directory."
 echo ""
 
-
-# Cleanup: Remove the temporary folder and its contents
-rm -rf "$new_folder"
-echo "Temporary folder has been removed."
 echo "Returning to the main menu in 10 seconds..."
 
 # exit to main menu
 sleep 10
-exec ./main.sh
+exec ./scripts/data/main.sh
