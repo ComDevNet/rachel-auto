@@ -7,7 +7,7 @@ echo ""
 echo ""
 
 # Display the name of the tool
-figlet -c -t -f 3d "PROCESS  DATA" | lolcat
+figlet -c -t -f 3d "DATA PROCESSING" | lolcat
 
 echo ""
 
@@ -24,16 +24,17 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. All"
-echo "2. Logs"
-echo "3. Requests"
+echo "1. Start Processing"
+echo "2. Process Logs"
+echo "3. Process Requests"
 echo "4. Data Collection"
-echo -e "${GREEN}5. Go Back"
-echo -e "${RED}6. Exit"
+echo "5. Data Upload"
+echo -e "${GREEN}6. Go Back"
+echo -e "${RED}7. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-6): " choice
+read -p "Choose an option (1-7): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
@@ -53,9 +54,12 @@ case $choice in
         ./scripts/data/main.sh
         ;;
     6)
+        ./scripts/data/main.sh
+        ;;
+    7)
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 5."
+        echo "Invalid choice. Please choose a number between 1 and 7."
         ;;
 esac

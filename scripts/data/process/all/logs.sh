@@ -33,14 +33,7 @@ selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 # Run the Python script with the selected folder as an argument
 python3 "$python_script_path" "$selected_folder"
 
-# Prompt the user for further action
-read -p "Do you want to process another log folder? (y/n): " user_response
+echo "Processing requests in 2 seconds..."
+    sleep 2
+    exec ./scripts/data/process/all/requests.sh
 
-if [ "$user_response" == "y" ]; then
-    exec ./scripts/data/process/logs.sh
-else
-    echo "Returning to the main menu in 5 seconds..."
-    sleep 5
-    exec ./scripts/data/process/main.sh
-    # Add your logic for returning to the main menu or other actions
-fi
