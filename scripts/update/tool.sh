@@ -14,23 +14,20 @@ git pull
 
 # Check if the pull was successful
 if [ $? -eq 0 ]; then
+    echo ""
     echo "Script updated successfully."
-    echo "Returning to the main menu in 5 seconds..."
 else
     echo "Failed to update the script. Please check for updates manually."
-    echo "Returning to the main menu in 5 seconds..."
+    exit 1
 fi
+
+# Set execute permissions for all scripts in the current directory
+chmod +x *.sh
 
 # Return to the original directory
 cd "$current_directory"
 
-chmod +x exit.sh
-chmod +x system-update.sh
-chmod +x interface-update.sh
-chmod +x connect-vpn.sh
-chmod +x vpn-connection.sh
-chmod +x download-logs.sh
-chmod +x update-script.sh
-
+# Sleep and return to the main menu
+echo "Returning to the main menu in 5 seconds..."
 sleep 5
-exec ./main.sh
+exec ./scripts/update/main.sh
