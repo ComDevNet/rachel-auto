@@ -55,7 +55,7 @@ def process_log_file(file_path):
 
     return log_data
 
-def save_processed_log_file(selected_folder, log_data):
+def save_processed_log_file(selected_folder, file_path, log_data):
     processed_folder_path = os.path.join("00_DATA", "PROCESSED", selected_folder)
     
     # Create the 'PROCESSED' folder if it doesn't exist
@@ -80,14 +80,23 @@ if __name__ == '__main__':
     selected_folder = sys.argv[1]  # Access the argument passed from the command line
     folder_path = os.path.join("00_DATA", selected_folder)
 
+    # Get the total number of files for the progress bar
+    total_files = sum([len(files) for _, _, files in os.walk(folder_path)])
+
     # Process each access.log file in the folder
-    for root, dirs, files in os.walk(folder_path):
+    progress = 0
+    for i, (root, dirs, files) in enumerate(os.walk(folder_path)):
         for file in files:
             if file.endswith(".log"):
                 file_path = os.path.join(root, file)
                 log_data = process_log_file(file_path)
 
                 # Save the result to a separate CSV file for each log file
-                save_processed_log_file(selected_folder, log_data)
+                save_processed_log_file(selected_folder, file_path, log_data)
 
-    print("Log files processed successfully.")
+                # Update progress bar
+                progress += 1
+                percentage = (progress / total_files) * 100
+                print(f"\rProcessing files: [{int(percentage)}%] [{'#' * int(percentage / 2)}]", end='', flush=True)
+
+    print("\nLog files processed successfully.")
