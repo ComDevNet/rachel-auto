@@ -21,6 +21,8 @@ else
     exit 1
 fi
 
+cd ../..
+
 # Set execute permissions for all scripts in the current directory
 chmod +x scripts/vpn/*
 chmod +x scripts/update/*
