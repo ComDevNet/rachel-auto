@@ -22,6 +22,9 @@ else
 fi
 
 # Set execute permissions for all scripts in the current directory
+chmod +x scripts/vpn/*.sh
+chmod +x scripts/update/*.sh
+chmod +x scripts/data/*.sh
 chmod +x *.sh
 
 # Return to the original directory

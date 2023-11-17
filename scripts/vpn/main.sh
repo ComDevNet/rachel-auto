@@ -3,15 +3,18 @@
 # clear the screen
 clear
 
+echo ""
+echo ""
+
 # Display the name of the tool
 figlet -c -t -f 3d "VPN" | lolcat
 
 echo ""
 
 # A border to cover the description and its centered
-echo  "============================================================================================================================"
+echo  "========================================"
 echo "VPN Connection to the Zerotier Network"
-echo "============================================================================================================================"
+echo "========================================"
 
 echo ""
 
@@ -36,7 +39,7 @@ case $choice in
         ./scripts/vpn/connect.sh
         ;;
     2)
-        ./scripts/vpn/Status.sh
+        ./scripts/vpn/status.sh
         ;;
     3)
         ./main.sh
@@ -45,6 +48,6 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 5."
+        echo "Invalid choice. Please choose a number between 1 and 4."
         ;;
 esac

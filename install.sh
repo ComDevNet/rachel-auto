@@ -9,6 +9,9 @@ wget https://raw.githubusercontent.com/xero/figlet-fonts/master/3d.flf
 sudo mv 3d.flf /usr/share/figlet/
 
 # make the scripts executable
+chmod +x scripts/vpn/*.sh
+chmod +x scripts/update/*.sh
+chmod +x scripts/data/*.sh
 chmod +x *.sh
 
 exec ./main.sh

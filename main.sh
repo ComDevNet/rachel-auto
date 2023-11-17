@@ -27,7 +27,7 @@ GREEN='\033[0;32m'
 
 # Display menu options
 echo "1. Update"
-echo "2. Update Rachel Interface"
+echo "2. VPN"
 echo "3. VPN Network"
 echo "4. Check VPN Status"
 echo "5. Download Rachel Logs"
@@ -44,7 +44,7 @@ case $choice in
         ./scripts/update/main.sh
         ;;
     2)
-        ./interface-update.sh
+        ./scripts/vpn/main.sh
         ;;
     3)
         ./connect-vpn.sh
