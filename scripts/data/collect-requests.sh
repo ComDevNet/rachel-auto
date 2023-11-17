@@ -27,8 +27,28 @@ fi
 # Move the new folder to a folder called data
 mv "$new_folder" "00_DATA"
 
-echo "Returning to the main menu in 10 seconds..."
+# Prompt the user for further action
+echo "What do next?"
+echo "1. Collect Logs"
+echo "2. Process 'request.txt' File"
+echo "3. Return To The Main Menu"
 
-# exit to main menu
-sleep 10
-exec ./scripts/data/main.sh
+read -p "Enter your choice (1-3): " user_choice
+
+case $user_choice in
+    1)
+        exec ./scripts/data/collect-logs.sh
+        ;;
+    2)
+        exec ./scripts/data/process/process-request.sh
+        ;;
+    3)
+        echo "Returning to the main menu in 4 seconds..."
+        sleep 4
+        exec ./scripts/data/main.sh
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac

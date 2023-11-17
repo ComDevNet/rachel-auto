@@ -26,7 +26,7 @@ GREEN='\033[0;32m'
 # Display menu options
 echo "1. Collect Logs"
 echo "2. Collect Request File"
-echo "3. Process Logs"
+echo "3. Process Data"
 echo "4. Upload Data"
 echo -e "${GREEN}5. Go Back"
 echo -e "${RED}6. Exit"
@@ -44,7 +44,7 @@ case $choice in
         ./scripts/data/collect-requests.sh
         ;;
     3)
-        ./scripts/data/process.sh
+        ./scripts/data/process/main.sh
         ;;
     4)
         ./scripts/data/upload.sh

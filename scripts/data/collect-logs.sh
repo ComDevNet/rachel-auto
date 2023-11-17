@@ -54,8 +54,28 @@ mv "$new_folder" "00_DATA"
 echo "Logs are ready in the 00_DATA directory."
 echo ""
 
-echo "Returning to the main menu in 10 seconds..."
+# Prompt the user for further action
+echo "What do next?"
+echo "1. Collect Request File"
+echo "2. Process Log Files"
+echo "3. Return to the main menu"
 
-# exit to main menu
-sleep 10
-exec ./scripts/data/main.sh
+read -p "Enter your choice (1-3): " user_choice
+
+case $user_choice in
+    1)
+        exec ./scripts/data/collect-requests.sh
+        ;;
+    2)
+        exec ./scripts/data/proess/process-logs.sh
+        ;;
+    3)
+        echo "Returning to the main menu in 4 seconds..."
+        sleep 4
+        exec ./scripts/data/main.sh
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
