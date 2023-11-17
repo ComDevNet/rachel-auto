@@ -9,6 +9,7 @@ current_directory=$(pwd)
 cd /var/www/ || exit
 
 sudo git fetch
+sudo git pull
 # Get the current branch
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 

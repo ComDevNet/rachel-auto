@@ -2,6 +2,11 @@
 
 # This script collects the "request.txt" file from the www folder and organizes it
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
 
@@ -31,8 +36,9 @@ mv "$new_folder" "00_DATA"
 echo "What do next?"
 echo "1. Collect Logs"
 echo "2. Process 'request.txt' File"
-echo "3. Return To The Main Menu"
+echo -e "${RED}3. Return to the main menu"
 
+echo -e "${NC}"
 read -p "Enter your choice (1-3): " user_choice
 
 case $user_choice in

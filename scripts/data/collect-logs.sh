@@ -2,6 +2,11 @@
 
 # This script collects access log files from the apache log folder, renames them and keeps them organized
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
 
@@ -58,8 +63,9 @@ echo ""
 echo "What do next?"
 echo "1. Collect Request File"
 echo "2. Process Log Files"
-echo "3. Return to the main menu"
+echo -e "${RED}3. Return to the main menu"
 
+echo -e "${NC}"
 read -p "Enter your choice (1-3): " user_choice
 
 case $user_choice in
