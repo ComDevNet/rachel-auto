@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script updates this tool.
+
 # Save the current directory
 current_directory=$(pwd)
 

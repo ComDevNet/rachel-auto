@@ -3,8 +3,11 @@
 # clear the screen
 clear
 
+echo ""
+echo ""
+
 # Display the name of the tool
-figlet -c -t -f 3d "Rachel Auto" | lolcat
+figlet -c -t -f 3d "RACHEL AUTO" | lolcat
 
 echo ""
 
@@ -23,7 +26,7 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Update System"
+echo "1. Update"
 echo "2. Update Rachel Interface"
 echo "3. VPN Network"
 echo "4. Check VPN Status"
@@ -38,7 +41,7 @@ read -p "Choose an option (1-5): " choice
 # Check the user's choice and execute the corresponding script
 case $choice in
     1)
-        ./update-system.sh
+        ./scripts/update/main.sh
         ;;
     2)
         ./interface-update.sh

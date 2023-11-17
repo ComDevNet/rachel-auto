@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script updates the Rachel Interface,
+# The interface can be found on comdevnet GitHub Organization
+
 # Save the current directory
 current_directory=$(pwd)
 
@@ -27,12 +30,13 @@ read -p "Do you want to update to the latest release? (y/n): " user_response
 if [ "$user_response" == "y" ]; then
     # Perform a git pull
     sudo git pull
-    echo "New release pulled successfully. Returning to the main menu in 3 seconds..."
+    echo ""
+    echo "New release pulled successfully. Returning to the main menu in 4 seconds..."
 else
-    echo "Interface is the latest version. Returning to the main menu in 3 seconds..."
+    echo "Interface is the latest version. Returning to the main menu in 4 seconds..."
 fi
 
 cd "$current_directory"
-sleep 3
+sleep 4
 # Return to the main script
-exec ./main.sh
+exec ./scripts/update/main.sh
