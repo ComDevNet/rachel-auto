@@ -36,25 +36,27 @@ mv "$new_folder" "00_DATA"
 echo "What do next?"
 echo "1. Collect Logs"
 echo "2. Process 'request.txt' File"
-echo -e "${RED}3. Return to the main menu"
+echo -e "${GREEN}3. Return to the Main Menu"
 
 echo -e "${NC}"
 read -p "Enter your choice (1-3): " user_choice
 
 case $user_choice in
     1)
-        exec ./scripts/data/collect-logs.sh
+        exec ./scripts/data/collection/collect-logs.sh
         ;;
     2)
-        exec ./scripts/data/process/process-request.sh
+        exec ./scripts/data/process/requests.sh
         ;;
     3)
         echo "Returning to the main menu in 4 seconds..."
         sleep 4
-        exec ./scripts/data/main.sh
+        exec ./scripts/data/collection/main.sh
         ;;
     *)
-        echo "Invalid choice. Exiting."
-        exit 1
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 3."
+        echo -e "${NC}"
+        sleep 4
+        exec ./scripts/data/collection/collect-requests.sh
         ;;
 esac
