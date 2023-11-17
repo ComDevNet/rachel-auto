@@ -12,6 +12,7 @@ sudo mv 3d.flf /usr/share/figlet/
 chmod +x scripts/vpn/*.sh
 chmod +x scripts/update/*.sh
 chmod +x scripts/data/*.sh
+chmod +x scripts/system/*.sh
 chmod +x *.sh
 
 exec ./main.sh

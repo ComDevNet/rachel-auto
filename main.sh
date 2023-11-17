@@ -28,11 +28,9 @@ GREEN='\033[0;32m'
 # Display menu options
 echo "1. Update"
 echo "2. VPN"
-echo "3. VPN Network"
-echo "4. Check VPN Status"
-echo "5. Download Rachel Logs"
-echo -e "${GREEN}6. Update Script"
-echo -e "${RED}7. Exit"
+echo "3. Data"
+echo "4. System"
+echo -e "${RED}5. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -47,18 +45,12 @@ case $choice in
         ./scripts/vpn/main.sh
         ;;
     3)
-        ./connect-vpn.sh
+        ./scripts/data/main.sh
         ;;
     4)
-        ./vpn-connection.sh
+        ./scripts/system/main.sh
         ;;
     5)
-        ./download-logs.sh
-        ;;
-    6)
-        ./update-script.sh
-        ;;
-    7)
         ./exit.sh
         ;;
     *)
