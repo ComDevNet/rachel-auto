@@ -22,11 +22,11 @@ else
 fi
 
 # Set execute permissions for all scripts in the current directory
-chmod +x scripts/vpn/*.sh
-chmod +x scripts/update/*.sh
-chmod +x scripts/data/*.sh
-chmod +x scripts/system/*.sh
-chmod +x *.sh
+chmod +x scripts/vpn/*
+chmod +x scripts/update/*
+chmod +x scripts/data/*
+chmod +x scripts/system/*
+chmod +x *
 
 # Return to the original directory
 cd "$current_directory"
