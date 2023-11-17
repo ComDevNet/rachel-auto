@@ -25,6 +25,7 @@ fi
 chmod +x scripts/vpn/*.sh
 chmod +x scripts/update/*.sh
 chmod +x scripts/data/*.sh
+chmod +x scripts/system/*.sh
 chmod +x *.sh
 
 # Return to the original directory

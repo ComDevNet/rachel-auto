@@ -25,7 +25,7 @@ GREEN='\033[0;32m'
 
 # Display menu options
 echo "1. Connect"
-echo "2. Status"
+echo "2. Check Status"
 echo -e "${GREEN}3. Go Back"
 echo -e "${RED}4. Exit"
 

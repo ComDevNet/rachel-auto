@@ -22,13 +22,15 @@ chmod +x install.sh
 ## Things Automated
 - [x] Update the system
 - [x] Update the Rachel Interface
+- [x] Update Script
 - [x] Connect VPN
 - [x] Check VPN Status
-- [x] Download Logs
-- [x] Update Script
-- [ ] Process Logs -> (Download Logs v2)
+- [x] Change Interface (git branching)
+- [x] System Configuration
+- [x] Shutdown System
+- [x] Reboot System
+- [ ] Collect Logs
+- [ ] Process Logs
 - [ ] Upload Logs to Server
-- [ ] Download Content Request File
-- [ ] Change Interface
-- [ ] System Settings
+- [ ] Collect Content Request File
 - [ ] upload log data to server

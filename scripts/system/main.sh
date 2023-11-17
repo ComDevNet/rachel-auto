@@ -12,9 +12,9 @@ figlet -c -t -f 3d "SYSTEM" | lolcat
 echo ""
 
 # A border to cover the description and its centered
-echo  "========================================"
+echo  "================================================================================="
 echo "All basic system settings, Be careful here though, you might mess up the system"
-echo "========================================"
+echo "================================================================================="
 
 echo ""
 
@@ -25,13 +25,15 @@ GREEN='\033[0;32m'
 
 # Display menu options
 echo "1. Change Interface"
-echo "2. Status"
-echo -e "${GREEN}3. Go Back"
-echo -e "${RED}4. Exit"
+echo "2. Raspberry Pi Configuration"
+echo "3. Reboot"
+echo "4. Shutdown"
+echo -e "${GREEN}5. Go Back"
+echo -e "${RED}6. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-4): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
@@ -39,15 +41,21 @@ case $choice in
         ./scripts/system/change-interface.sh
         ;;
     2)
-        ./scripts/vpn/status.sh
+        ./scripts/system/raspi-config.sh
         ;;
     3)
-        ./main.sh
+        ./scripts/sytem/reboot.sh
         ;;
     4)
+        ./scripts/sytem/shutdown.sh
+        ;;
+    5)
+        ./main.sh
+        ;;
+    6)
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 4."
+        echo "Invalid choice. Please choose a number between 1 and 6."
         ;;
 esac
