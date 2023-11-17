@@ -15,7 +15,7 @@ def process_requests_file(file_path):
     return requests_data
 
 def save_processed_requests_file(selected_folder, file_path, requests_data):
-    processed_folder_path = os.path.join("00_DATA", "PROCESSED", selected_folder)
+    processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
 
     if not os.path.exists(processed_folder_path):
         os.makedirs(processed_folder_path)

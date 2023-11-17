@@ -56,7 +56,7 @@ def process_log_file(file_path):
     return log_data
 
 def save_processed_log_file(selected_folder, file_path, log_data):
-    processed_folder_path = os.path.join("00_DATA", "PROCESSED", selected_folder)
+    processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
     
     # Create the 'PROCESSED' folder if it doesn't exist
     if not os.path.exists(processed_folder_path):
