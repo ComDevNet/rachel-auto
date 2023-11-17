@@ -8,6 +8,9 @@ sudo apt-get install lolcat
 wget https://raw.githubusercontent.com/xero/figlet-fonts/master/3d.flf
 sudo mv 3d.flf /usr/share/figlet/
 
+# install python3 and pip3
+pip install -r requirements.txt
+
 # make the scripts executable
 chmod +x scripts/vpn/*.sh
 chmod +x scripts/update/*.sh

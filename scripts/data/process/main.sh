@@ -12,9 +12,9 @@ figlet -c -t -f 3d "PROCESS  DATA" | lolcat
 echo ""
 
 # A border to cover the description and its centered
-echo  "============================"
-echo "Proess your data with ease"
-echo "============================"
+echo  "==============================================================================="
+echo "Process your data with ease, Make Sure you've already run the Collect Scripts"
+echo "==============================================================================="
 
 echo ""
 
@@ -27,12 +27,13 @@ GREEN='\033[0;32m'
 echo "1. All"
 echo "2. Logs"
 echo "3. Requests"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo "4. Data Collection"
+echo -e "${GREEN}5. Go Back"
+echo -e "${RED}6. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-5): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
@@ -46,9 +47,12 @@ case $choice in
         ./scripts/data/process/requests.sh
         ;;
     4)
-        ./scripts/data/main.sh
+        ./scripts/data/collection/main.sh
         ;;
     5)
+        ./scripts/data/main.sh
+        ;;
+    6)
         ./exit.sh
         ;;
     *)
