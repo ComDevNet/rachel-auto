@@ -44,10 +44,10 @@ case $choice in
         ./scripts/system/raspi-config.sh
         ;;
     3)
-        ./scripts/sytem/reboot.sh
+        ./scripts/system/reboot.sh
         ;;
     4)
-        ./scripts/sytem/shutdown.sh
+        ./scripts/system/shutdown.sh
         ;;
     5)
         ./main.sh
