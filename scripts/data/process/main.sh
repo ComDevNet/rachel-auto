@@ -12,9 +12,9 @@ figlet -c -t -f 3d "PROCESS  DATA" | lolcat
 echo ""
 
 # A border to cover the description and its centered
-echo  "==============================================================================="
-echo "Process your data with ease, Make Sure you've already run the Collect Scripts"
-echo "==============================================================================="
+echo  "=================================================================================="
+echo "Process your data with ease, Make Sure you've already run the Collection Scripts"
+echo "=================================================================================="
 
 echo ""
 
