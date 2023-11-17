@@ -26,6 +26,7 @@ GREEN='\033[0;32m'
 # Display menu options
 echo "1. Connect"
 echo "2. Check Status"
+echo "3. Disconnect"
 echo -e "${GREEN}3. Go Back"
 echo -e "${RED}4. Exit"
 
@@ -42,9 +43,12 @@ case $choice in
         ./scripts/vpn/status.sh
         ;;
     3)
-        ./main.sh
+        ./scripts/vpn/disconnect.sh
         ;;
     4)
+        ./main.sh
+        ;;
+    5)
         ./exit.sh
         ;;
     *)

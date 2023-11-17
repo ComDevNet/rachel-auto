@@ -29,7 +29,8 @@ chmod +x install.sh
 - [x] System Configuration
 - [x] Shutdown System
 - [x] Reboot System
-- [ ] Collect Logs
-- [ ] Process Logs
-- [ ] Upload Logs to Server
-- [ ] Collect Content Request File
+- [x] Collect Logs
+- [x] Process Logs
+- [x] Collect Content Request File
+- [x] Disconnect from VPN Network
+- [ ] Upload Data to Server

@@ -15,6 +15,8 @@ pip install -r requirements.txt
 chmod +x scripts/vpn/*.sh
 chmod +x scripts/update/*.sh
 chmod +x scripts/data/*.sh
+chmod +x scripts/data/collection/*.sh
+chmod +x scripts/data/process/*.sh
 chmod +x scripts/system/*.sh
 chmod +x *.sh
 
