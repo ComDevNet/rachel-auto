@@ -10,7 +10,7 @@
 ## Installation
 ```
 git clone https://github.com/ComDevNet/rachel-auto-tool.git
-cd rachel-auto-tool
+cd rachel-auto
 chmod +x install.sh
 ./install.sh
 ``` 
