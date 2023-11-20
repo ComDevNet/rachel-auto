@@ -29,6 +29,7 @@ read -p "Do you want to update to the latest release? (y/n): " user_response
 
 if [ "$user_response" == "y" ]; then
     # Perform a git pull
+    git reset --hard HEAD
     sudo git pull
     echo ""
     echo "New release pulled successfully. Returning to the main menu in 4 seconds..."
