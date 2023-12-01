@@ -12,12 +12,12 @@ sudo mv 3d.flf /usr/share/figlet/
 pip install -r requirements.txt
 
 # make the scripts executable
-chmod +x scripts/vpn/*.sh
-chmod +x scripts/update/*.sh
-chmod +x scripts/data/*.sh
-chmod +x scripts/data/collection/*.sh
-chmod +x scripts/data/process/*.sh
-chmod +x scripts/system/*.sh
-chmod +x *.sh
+sudo chmod +x scripts/vpn/*.sh
+sudo chmod +x scripts/update/*.sh
+sudo chmod +x scripts/data/*.sh
+sudo chmod +x scripts/data/collection/*.sh
+sudo chmod +x scripts/data/process/*.sh
+sudo chmod +x scripts/system/*.sh
+sudo chmod +x *.sh
 
 exec ./main.sh
