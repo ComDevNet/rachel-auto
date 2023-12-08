@@ -9,7 +9,6 @@ current_directory=$(pwd)
 cd /var/www/ || exit
 
 sudo git fetch
-sudo git pull
 # Get the current branch
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
@@ -34,15 +33,15 @@ if [ "$switch_branch" == "y" ]; then
         # Perform a git checkout to the desired branch
         sudo git checkout "$desired_branch"
         echo ""
-        echo "Switched to branch $desired_branch successfully. Returning to the main menu in 4 seconds..."
+        echo "Switched to branch $desired_branch successfully. Returning to the main menu in 2 seconds..."
     else
-        echo "Branch $desired_branch does not exist. Returning to the main menu in 4 seconds..."
+        echo "Branch $desired_branch does not exist. Returning to the main menu in 2 seconds..."
     fi
 else
-    echo "Not switching branches. Returning to the main menu in 4 seconds..."
+    echo "Not switching branches. Returning to the main menu in 2 seconds..."
 fi
 
 cd "$current_directory"
-sleep 4
+sleep 2
 # Return to the main script
 exec ./scripts/system/main.sh
