@@ -53,5 +53,7 @@ case $choice in
         ;;
     *)
         echo "Invalid choice. Please choose a number between 1 and 4."
+        sleep 3
+        exec ./scripts/vpn/main.sh
         ;;
 esac

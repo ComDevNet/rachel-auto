@@ -13,10 +13,10 @@ zerotier-cli leave 0.0.0.0
 # Check the exit status of the zerotier-cli command
 if [ $? -eq 0 ]; then
     echo "Disconnected from all ZeroTier networks."
-    sleep 4
+    sleep 2
     exec ./scripts/vpn/main.sh
 else
     echo "Error: Failed to disconnect from ZeroTier networks."
-    sleep 4
+    sleep 3
     exec ./scripts/vpn/main.sh
 fi
