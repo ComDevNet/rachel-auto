@@ -51,14 +51,14 @@ case $user_choice in
         exec ./scripts/data/process/requests.sh
         ;;
     3)
-        echo "Returning to the main menu in 4 seconds..."
-        sleep 4
+        echo "Returning to the main menu in 2 seconds..."
+        sleep 2
         exec ./scripts/data/collection/main.sh
         ;;
     *)
         echo -e "${RED}Invalid choice. Please choose a number between 1 and 3."
         echo -e "${NC}"
-        sleep 4
+        sleep 3
         exec ./scripts/data/collection/collect-requests.sh
         ;;
 esac

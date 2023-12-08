@@ -40,6 +40,6 @@ selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 # Run the Python script with the selected folder as an argument
 python3 "$python_script_path" "$selected_folder"
 
-echo "Returning to the main menu in 5 seconds..."
-    sleep 5
+echo "Returning to the main menu in 2 seconds..."
+    sleep 2
     exec ./scripts/data/main.sh

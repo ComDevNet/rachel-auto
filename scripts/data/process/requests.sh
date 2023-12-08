@@ -46,8 +46,8 @@ read -p "Do you want to process another request folder? (y/n): " user_response
 if [ "$user_response" == "y" ]; then
     exec ./scripts/data/process/requests.sh
 else
-    echo "Returning to the main menu in 5 seconds..."
-    sleep 5
+    echo "Returning to the main menu in 2 seconds..."
+    sleep 2
     exec ./scripts/data/process/main.sh
     # Add your requestic for returning to the main menu or other actions
 fi

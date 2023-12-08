@@ -27,7 +27,7 @@ GREEN='\033[0;32m'
 echo "1. Start"
 echo "2. Collect Logs"
 echo "3. Collect Request File"
-echo "4. Process Data"
+echo "4. Data Processing"
 echo -e "${GREEN}5. Go Back"
 echo -e "${RED}6. Exit"
 
@@ -57,7 +57,7 @@ case $choice in
         ;;
     *)
         echo -e "${RED}Invalid choice. Please choose a number between 1 and 6."
-        sleep 4
+        sleep 3
         exec ./scripts/data/collection/main.sh
         ;;
 esac

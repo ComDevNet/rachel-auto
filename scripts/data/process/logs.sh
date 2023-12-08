@@ -23,7 +23,7 @@ read -p "Enter the number corresponding to the log folder you want to process: "
 # Validate user input
 if [[ ! $folder_number =~ ^[1-9][0-9]*$ || $folder_number -gt ${#folders[@]} ]]; then
     echo "Invalid input. Please enter a valid folder number."
-    sleep 5
+    sleep 3
     exec ./scripts/data/process/main.sh
 fi
 
@@ -39,8 +39,8 @@ read -p "Do you want to process another log folder? (y/n): " user_response
 if [ "$user_response" == "y" ]; then
     exec ./scripts/data/process/logs.sh
 else
-    echo "Returning to the main menu in 5 seconds..."
-    sleep 5
+    echo "Returning to the main menu in 2 seconds..."
+    sleep 2
     exec ./scripts/data/process/main.sh
     # Add your logic for returning to the main menu or other actions
 fi

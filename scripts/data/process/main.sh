@@ -61,7 +61,7 @@ case $choice in
         ;;
     *)
         echo -e "${RED}Invalid choice. Please choose a number between 1 and 7."
-        sleep 4
+        sleep 2
         exec ./scripts/data/process/main.sh
         ;;
 esac
