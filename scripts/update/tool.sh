@@ -24,7 +24,16 @@ fi
 cd ../..
 
 # Set execute permissions for all scripts in the current directory
-exec ./install.sh
+sudo chmod +x *.sh
+sudo chmod +x scripts/vpn/*.sh
+sudo chmod +x scripts/update/*.sh
+sudo chmod +x scripts/system/*.sh
+sudo chmod +x scripts/data/*.sh
+sudo chmod +x scripts/data/all/*.sh
+sudo chmod +x scripts/data/all/process/*.sh
+sudo chmod +x scripts/data/collection/*.sh
+sudo chmod +x scripts/data/process/*.sh
+sudo chmod +x scripts/data/process/all/*.sh
 
 # Return to the original directory
 cd "$current_directory"
