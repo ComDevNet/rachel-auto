@@ -76,7 +76,7 @@ def save_processed_log_file(selected_folder, file_path, log_data):
         output_file.write(output_csv.getvalue())
 
 def create_master_csv(selected_folder, all_log_data):
-    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, "master.csv")
+    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, "summary.csv")
 
     with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
         csv_writer = csv.writer(master_csv)
@@ -113,5 +113,5 @@ if __name__ == '__main__':
 
 # Create the master CSV file
     create_master_csv(selected_folder, all_log_data)
-    
+
     print("\nLog files processed successfully.")
