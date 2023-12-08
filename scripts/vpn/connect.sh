@@ -7,6 +7,7 @@ sudo systemctl stop zerotier-one
 sudo rm -rf /var/lib/zerotier-one/identity.secret
 sudo rm -rf /var/lib/zerotier-one/identity.public
 sudo systemctl start zerotier-one
+sudo systemctl enable zerotier-one
 
 # Ask the user to input a network ID
 read -p "Enter the network ID: " network_id
