@@ -24,7 +24,7 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. All"
+echo "1. Start"
 echo "2. Collect Logs"
 echo "3. Collect Request File"
 echo "4. Process Data"
@@ -56,7 +56,7 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo -e "${RED}Invalid choice. Please choose a number between 1 and 5."
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 6."
         sleep 4
         exec ./scripts/data/collection/main.sh
         ;;

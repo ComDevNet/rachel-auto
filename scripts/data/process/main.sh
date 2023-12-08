@@ -24,7 +24,7 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Start Processing"
+echo "1. Start"
 echo "2. Process Logs"
 echo "3. Process Requests"
 echo "4. Data Collection"
@@ -60,6 +60,8 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 7."
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 7."
+        sleep 4
+        exec ./scripts/data/process/main.sh
         ;;
 esac
