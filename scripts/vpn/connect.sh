@@ -2,6 +2,12 @@
 
 # This script is used to connect to a zerotier network
 
+#creating a new identity
+sudo systemctl stop zerotier-one
+sudo rm -rf /var/lib/zerotier-one/identity.secret
+sudo rm -rf /var/lib/zerotier-one/identity.public
+sudo systemctl start zerotier-one
+
 # Ask the user to input a network ID
 read -p "Enter the network ID: " network_id
 
@@ -12,7 +18,7 @@ sudo zerotier-cli join "$network_id"
 sudo touch "/var/lib/zerotier-one/networks.d/$network_id.conf"
 
 # Display a success message and wait for 5 seconds
-echo "ZeroTier network joined successfully. Returning to the main menu in 4 seconds..."
+echo "ZeroTier network joined successfully. Returning to script in 4 seconds..."
 sleep 4
 
 # Return to the main script

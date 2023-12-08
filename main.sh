@@ -55,5 +55,7 @@ case $choice in
         ;;
     *)
         echo "Invalid choice. Please choose a number between 1 and 5."
+        sleep 2
+        exec ./main.sh
         ;;
 esac

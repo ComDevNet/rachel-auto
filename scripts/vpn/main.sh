@@ -27,8 +27,8 @@ GREEN='\033[0;32m'
 echo "1. Connect"
 echo "2. Check Status"
 echo "3. Disconnect"
-echo -e "${GREEN}3. Go Back"
-echo -e "${RED}4. Exit"
+echo -e "${GREEN}4. Go Back"
+echo -e "${RED}5. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
