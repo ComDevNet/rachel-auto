@@ -1,12 +1,12 @@
 #!/bin/bash
+clear
 
-# This script collects access log files from the apache log folder, renames them and keeps them organized
+echo ""
+echo ""
+echo "Collecting Logs and Requests ........."
+sleep 2
 
-# variables
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-GREEN='\033[0;32m'
-
+# Collecting the log files
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
 # Replace spaces with underscores
@@ -61,31 +61,40 @@ mv "$new_folder" "00_DATA"
 echo "Logs are ready in the 00_DATA directory."
 echo ""
 
-# Prompt the user for further action
-echo "What do next?"
-echo "1. Collect Request File"
-echo "2. Process Log Files"
-echo -e "${GREEN}3. Return to the Main Menu"
 
-echo -e "${NC}"
-read -p "Enter your choice (1-3): " user_choice
+# This collects the request files
+# Specify the www directory
+www_directory="/var/www"
 
-case $user_choice in
-    1)
-        exec ./scripts/data/collection/collect-requests.sh
-        ;;
-    2)
-        exec ./scripts/data/process/logs.sh
-        ;;
-    3)
-        echo "Returning to the main menu in 4 seconds..."
-        sleep 4
-        exec ./scripts/data/collection/main.sh
-        ;;
-    *)
-         echo -e "${RED}Invalid choice. Please choose a number between 1 and 3."
-        echo -e "${NC}"
-        sleep 4
-        exec ./scripts/data/collection/collect-logs.sh
-        ;;
-esac
+# Create a new folder with location and timestamp
+new_folder="${device_location}_requests_$(date '+%Y_%m_%d')"
+mkdir "$new_folder"
+
+# Copy the "request.txt" file from the www folder to the new folder
+cp "$www_directory/request.txt" "$new_folder/"
+
+# Display a message about the collected file
+echo "'request.txt' is ready in the $new_folder directory."
+echo ""
+
+# Check if the "00_DATA" folder exists, and create it if not
+if [ ! -d "00_DATA" ]; then
+    mkdir "00_DATA"
+fi
+
+# Move the new folder to a folder called data
+mv "$new_folder" "00_DATA"
+
+echo "Both Logs and request files have been collected Successfully"
+read -p "Do you want to Process them? (y/n):" user_choice
+
+# if satement
+if [[ "$user_choice" =~ ^[Yy]$ ]]; then
+  # run process all script
+  exec ./scripts/data/process/all.sh
+else
+  # execute code if the answer is no
+  echo "Returning to main menu..."
+  sleep 2
+  exec ./scripts/data/collection/main.sh
+fi

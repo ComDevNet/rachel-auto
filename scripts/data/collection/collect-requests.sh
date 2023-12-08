@@ -9,6 +9,8 @@ GREEN='\033[0;32m'
 
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
+# Replace spaces with underscores
+device_location=${device_location// /_}
 
 # Specify the www directory
 www_directory="/var/www"

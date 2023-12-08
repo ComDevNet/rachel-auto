@@ -24,31 +24,35 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Collect Logs"
-echo "2. Collect Request File"
-echo "3. Process Data"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo "1. All"
+echo "2. Collect Logs"
+echo "3. Collect Request File"
+echo "4. Process Data"
+echo -e "${GREEN}5. Go Back"
+echo -e "${RED}6. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-5): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
     1)
-        ./scripts/data/collection/collect-logs.sh
+        ./scripts/data/collection/all.sh
         ;;
     2)
-        ./scripts/data/collection/collect-requests.sh
+        ./scripts/data/collection/collect-logs.sh
         ;;
     3)
-        ./scripts/data/process/main.sh
+        ./scripts/data/collection/collect-requests.sh
         ;;
     4)
-        ./scripts/data/main.sh
+        ./scripts/data/process/main.sh
         ;;
     5)
+        ./scripts/data/main.sh
+        ;;
+    6)
         ./exit.sh
         ;;
     *)
