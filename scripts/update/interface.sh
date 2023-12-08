@@ -32,12 +32,12 @@ if [ "$user_response" == "y" ]; then
     git reset --hard HEAD
     sudo git pull
     echo ""
-    echo "New release pulled successfully. Returning to the main menu in 4 seconds..."
+    echo "New release pulled successfully. Returning to the main menu in 2 seconds..."
 else
-    echo "Interface is the latest version. Returning to the main menu in 4 seconds..."
+    echo "Interface is the latest version. Returning to the main menu in 2 seconds..."
 fi
 
 cd "$current_directory"
-sleep 4
+sleep 2
 # Return to the main script
 exec ./scripts/update/main.sh

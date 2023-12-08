@@ -24,16 +24,12 @@ fi
 cd ../..
 
 # Set execute permissions for all scripts in the current directory
-chmod +x scripts/vpn/*
-chmod +x scripts/update/*
-chmod +x scripts/data/*
-chmod +x scripts/system/*
-chmod +x *
+exec ./install.sh
 
 # Return to the original directory
 cd "$current_directory"
 
 # Sleep and return to the main menu
-echo "Returning to the main menu in 5 seconds..."
-sleep 5
+echo "Returning to the main menu in 2 seconds..."
+sleep 2
 exec ./scripts/update/main.sh
