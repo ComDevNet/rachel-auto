@@ -33,7 +33,6 @@ selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 # Run the Python script with the selected folder as an argument
 python3 "$python_script_path" "$selected_folder"
 
-echo "Processing requests in 2 seconds..."
-    sleep 2
+echo "Processing requests Request file"
     exec ./scripts/data/process/all/requests.sh
 

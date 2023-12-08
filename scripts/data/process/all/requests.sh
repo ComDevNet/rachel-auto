@@ -5,7 +5,7 @@ python_script_path="scripts/data/process/processors/process_requests.py"
 
 echo ""
 # Prompt the user to pick a folder from '00_DATA' directory
-echo "Available requests folders in '00_DATA' directory:"
+echo "Select one of the available requests folders in '00_DATA' directory:"
 folders=($(ls -d 00_DATA/*requests*/))  # Filter folders with "requests" in their name
 
 if [ ${#folders[@]} -eq 0 ]; then
@@ -42,4 +42,4 @@ python3 "$python_script_path" "$selected_folder"
 
 echo "Returning to the main menu in 5 seconds..."
     sleep 5
-    exec ./scripts/data/process/main.sh
+    exec ./scripts/data/main.sh
