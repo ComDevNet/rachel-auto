@@ -75,6 +75,16 @@ def save_processed_log_file(selected_folder, file_path, log_data):
     with open(processed_file_path, 'w', encoding='utf-8') as output_file:
         output_file.write(output_csv.getvalue())
 
+def create_master_csv(selected_folder, all_log_data):
+    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, "master.csv")
+
+    with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
+        csv_writer = csv.writer(master_csv)
+        csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+        
+        for log_data in all_log_data:
+            csv_writer.writerows(log_data)
+
 if __name__ == '__main__':
     # Specify the folder path to process
     selected_folder = sys.argv[1]  # Access the argument passed from the command line
@@ -82,6 +92,7 @@ if __name__ == '__main__':
 
     # Get the total number of files for the progress bar
     total_files = sum([len(files) for _, _, files in os.walk(folder_path)])
+    all_log_data = []
 
     # Process each access.log file in the folder
     progress = 0
@@ -93,10 +104,14 @@ if __name__ == '__main__':
 
                 # Save the result to a separate CSV file for each log file
                 save_processed_log_file(selected_folder, file_path, log_data)
+                all_log_data.append(log_data)
 
                 # Update progress bar
                 progress += 1
                 percentage = (progress / total_files) * 100
                 print(f"\rProcessing files: [{int(percentage)}%] [{'#' * int(percentage / 2)}]", end='', flush=True)
 
+# Create the master CSV file
+    create_master_csv(selected_folder, all_log_data)
+    
     print("\nLog files processed successfully.")
