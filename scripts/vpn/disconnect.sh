@@ -8,7 +8,7 @@ if ! command -v zerotier-cli &> /dev/null; then
 fi
 
 # Disconnect from all ZeroTier networks
-zerotier-cli leave all
+zerotier-cli leave 0.0.0.0
 
 # Check the exit status of the zerotier-cli command
 if [ $? -eq 0 ]; then
