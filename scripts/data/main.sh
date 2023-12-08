@@ -24,35 +24,39 @@ NC='\033[0m' # No Color
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Collect Data"
-echo "2. Process Data"
-echo "3. Upload Data"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo "1. Start"
+echo "2. Collect Data"
+echo "3. Process Data"
+echo "4. Upload Data"
+echo -e "${GREEN}5. Go Back"
+echo -e "${RED}6. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-5): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
     1)
+        ./scripts/data/all.sh
+        ;; 
+    2)
         ./scripts/data/collection/main.sh
         ;;
-    2)
+    3)
         ./scripts/data/process/main.sh
         ;;
-    3)
+    4)
         ./scripts/data/upload.sh
         ;;
-    4)
+    5)
         ./main.sh
         ;;
-    5)
+    6)
         ./exit.sh
         ;;
     *)
-        echo -e "${RED}Invalid choice. Please choose a number between 1 and 5."
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 6."
         echo -e "${NC}"
         sleep 4
         exec ./scripts/data/main.sh
