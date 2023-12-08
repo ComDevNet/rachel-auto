@@ -1,9 +1,8 @@
 #!/bin/bash
-clear
 
 echo ""
+echo "Collecting Log and Request Files"
 echo ""
-echo "Collecting Logs and Requests"
 
 # Collecting the log files
 # Prompt the user for the location of the device
@@ -84,4 +83,6 @@ fi
 # Move the new folder to a folder called data
 mv "$new_folder" "00_DATA"
 
+echo "Starting Log and Request files processing in 2 second......"
+sleep 2
 exec ./scripts/data/all/process/logs.sh
