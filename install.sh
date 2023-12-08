@@ -11,6 +11,7 @@ sudo mv 3d.flf /usr/share/figlet/
 # install python3 and pip3
 pip3 install -r requirements.txt
 pip install -r requirements.txt
+pip3 install user-agents
 
 
 # make the scripts executable
