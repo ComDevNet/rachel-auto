@@ -76,11 +76,7 @@ def save_processed_log_file(selected_folder, file_path, log_data):
         output_file.write(output_csv.getvalue())
 
 def create_master_csv(selected_folder, all_log_data):
-    location_name = os.path.basename(selected_folder)
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    master_csv_name = f"{location_name}_{current_date}_master.csv"
-
-    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, master_csv_name)
+    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, f"{current_date}_summary.csv")
 
     with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
         csv_writer = csv.writer(master_csv)
