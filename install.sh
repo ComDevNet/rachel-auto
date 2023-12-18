@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo apt update
+sudo apt upgrade
+
 # install figlet and lolcat
 sudo apt-get install figlet
 sudo apt-get install lolcat
