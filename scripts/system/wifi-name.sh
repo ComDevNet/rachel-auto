@@ -24,6 +24,7 @@ change_wifi_name() {
         echo "Wifi name changes will be applied after device has been rebooted. Returning to main menu...."
         sleep 3
         exec ./scripts/system/main.sh
+    fi
 }
 
 # Display current wifi name
