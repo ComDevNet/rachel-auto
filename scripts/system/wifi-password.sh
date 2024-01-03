@@ -53,7 +53,7 @@ country_code=US" | sudo tee -a "$HOSTAPD_CONF" > /dev/null
     echo "WiFi password added."
     echo "Restarting WiFi..."
     sleep 2
-    sudo service restart hostapd
+    sudo systemctl restart hostapd
 }
 
 echo " "
