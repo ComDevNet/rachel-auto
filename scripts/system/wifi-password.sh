@@ -20,15 +20,21 @@ change_password() {
     read -p "Enter the new WiFi password: " new_password
     sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$HOSTAPD_CONF"
     echo "WiFi password changed."
+    echo "Restarting WiFi to apply changes..."
+    sleep 2
+    sudo systemctl restart hostapd
 }
 
 # Function to remove the password
 remove_password() {
-    cp "$HOSTAPD_CONF" "${HOSTAPD_CONF}_pass"
-    sudo sed -i -e '/^interface=/!d; /^driver=/!d; /^ssid=/!d; /^hw_mode=/!d; /^channel=/!d; /^auth_algs=/!d; /^wmm_enabled=/!d' "$HOSTAPD_CONF"
+    sudo cp "$HOSTAPD_CONF" "${HOSTAPD_CONF}_pass"
+    sudo sed -i -e '/^wpa=/d; /^wpa_passphrase=/d; /^wpa_key_mgmt=/d; /^wpa_pairwise=/d; /^rsn_pairwise=/d; /^ieee80211n=/d; /^ht_capab=/d; /^country_code=/d' "$HOSTAPD_CONF"
+    sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=0/" "$HOSTAPD_CONF"
     echo "WiFi password removed."
     echo "Configuration file backed up to ${HOSTAPD_CONF}_pass."
-    echo "Please restart the machine to apply changes."
+    echo "Restarting WiFi to apply changes..."
+    sleep 2
+    sudo systemctl restart hostapd
 }
 
 # Function to add password lines
@@ -40,19 +46,25 @@ wpa_pairwise=TKIP
 rsn_pairwise=CCMP
 ieee80211n=1
 ht_capab=[HT40+][SHORT-GI-20][DSSS_CCK-40]
-country_code=US" >> "$HOSTAPD_CONF"
-     sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=1/" "$HOSTAPD_CONF"
+country_code=US" | sudo tee -a "$HOSTAPD_CONF" > /dev/null
+    sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=1/" "$HOSTAPD_CONF"
     read -p "Enter the new WiFi password: " new_password
     sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$HOSTAPD_CONF"
     echo "WiFi password added."
+    echo "Restarting WiFi..."
+    sleep 2
+    sudo service hostapd restart
 }
 
 # Main menu
-echo "Welcome to WiFi Password Manager"
+figlet -c -t -f 3d "WiFi Password Manager" | lolcat
 
 if check_password_presence; then
     # Prompt user for options
-    read -p "Options: (1) Change Password, (2) Remove Password, (3) Go Back - Enter the option number: " option
+    echo "1. Change Password"
+    echo "2. Remove Password"
+    echo "3. Go Back"
+    read -p "Enter the option number: " option
 
     case $option in
         1)
@@ -62,7 +74,9 @@ if check_password_presence; then
             remove_password
             ;;
         3)
-            echo "Going back to the main menu."
+            echo "Going back to the Main Menu..."
+            sleep 3
+            exec ./scripts/system/main.sh
             ;;
         *)
             echo "Invalid option. Going back to the main menu."
@@ -75,6 +89,8 @@ else
     if [ "${add_password,}" == "y" ]; then
         add_password
     else
-        echo "No password added. Going back to the main menu."
+        echo "No password added. Going back to the main menu..."
+        sleep 3
+        exec ./scripts/system/main.sh
     fi
 fi
