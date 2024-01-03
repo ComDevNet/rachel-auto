@@ -27,11 +27,9 @@ change_password() {
 
 # Function to remove the password
 remove_password() {
-    sudo cp "$HOSTAPD_CONF" "${HOSTAPD_CONF}_pass"
     sudo sed -i -e '/^wpa=/d; /^wpa_passphrase=/d; /^wpa_key_mgmt=/d; /^wpa_pairwise=/d; /^rsn_pairwise=/d; /^ieee80211n=/d; /^ht_capab=/d; /^country_code=/d' "$HOSTAPD_CONF"
     sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=0/" "$HOSTAPD_CONF"
     echo "WiFi password removed."
-    echo "Configuration file backed up to ${HOSTAPD_CONF}_pass."
     echo "Restarting WiFi to apply changes..."
     sleep 2
     sudo systemctl restart hostapd
@@ -39,20 +37,27 @@ remove_password() {
 
 # Function to add password lines
 add_password() {
-    echo "wpa=2
-wpa_passphrase=
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP	
-rsn_pairwise=CCMP
-ieee80211n=1
-ht_capab=[HT40+][SHORT-GI-20][DSSS_CCK-40]
-country_code=US" | sudo tee -a "$HOSTAPD_CONF" > /dev/null
-    sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=1/" "$HOSTAPD_CONF"
+    # Define the source file and the destination directory
+    source_file="./files/hostapd_secure.conf"
+    destination_dir="/etc/hostapd/"
+
+    # Copy the source file to the destination directory and rename it
+    sudo cp "$source_file" "$destination_dir"
+    sudo mv "$destination_dir""hostapd_secure.conf" "$destination_dir""hostapd.conf"
+
+    # Ask for the new WiFi password and SSID
     read -p "Enter the new WiFi password: " new_password
-    sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$HOSTAPD_CONF"
-    echo "WiFi password added."
-    echo "Restarting WiFi..."
+    read -p "Enter the new WiFi name: " new_ssid
+
+    # Replace the placeholder password and SSID in the configuration with the new values
+    sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$destination_dir""hostapd.conf"
+    sudo sed -i "s/^\(ssid\s*=\s*\).*/\1$new_ssid/" "$destination_dir""hostapd.conf"
+
+    echo "WiFi password and Name added."
+    echo "Restarting WiFi to apply changes..."
     sleep 2
+
+    # Restart the hostapd service
     sudo systemctl restart hostapd
 }
 
