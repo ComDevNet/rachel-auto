@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Ask the user for the current date and time
+read -p "Enter the current date and time(24 hours) (YYYY-MM-DD HH:MM): " user_datetime
+
+# Set the system date and time
+sudo date --set="$user_datetime"
+
+# Update the system
+sudo apt update && sudo apt upgrade -y
+
 # install figlet and lolcat
 sudo apt-get install figlet
 sudo apt-get install lolcat
