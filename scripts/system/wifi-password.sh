@@ -56,8 +56,10 @@ country_code=US" | sudo tee -a "$HOSTAPD_CONF" > /dev/null
     sudo service hostapd restart
 }
 
+echo " "
 # Main menu
-figlet -c -t -f 3d "WiFi Password Manager" | lolcat
+figlet -c -t -f 3d "WIFI PASSWORD MANAGER" | lolcat
+echo " "
 
 if check_password_presence; then
     # Prompt user for options
