@@ -25,11 +25,12 @@ GREEN='\033[0;32m'
 
 # Display menu options
 echo "1. Change Interface"
-echo "2. Raspberry Pi Configuration"
-echo "3. Reboot"
-echo "4. Shutdown"
-echo -e "${GREEN}5. Go Back"
-echo -e "${RED}6. Exit"
+echo "2. Change WIFI Name"
+echo "3. Raspberry Pi Configuration"
+echo "4. Reboot"
+echo "5. Shutdown"
+echo -e "${GREEN}6. Go Back"
+echo -e "${RED}7. Exit"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -40,22 +41,25 @@ case $choice in
     1)
         ./scripts/system/change-interface.sh
         ;;
-    2)
-        ./scripts/system/raspi-config.sh
+    2) 
+        ./scripts/system/wifi-name.sh
         ;;
     3)
-        ./scripts/system/reboot.sh
+        ./scripts/system/raspi-config.sh
         ;;
     4)
-        ./scripts/system/shutdown.sh
+        ./scripts/system/reboot.sh
         ;;
     5)
-        ./main.sh
+        ./scripts/system/shutdown.sh
         ;;
     6)
+        ./main.sh
+        ;;
+    7)
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 6."
+        echo "Invalid choice. Please choose a number between 1 and 7."
         ;;
 esac
