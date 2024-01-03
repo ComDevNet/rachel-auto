@@ -17,7 +17,7 @@ change_wifi_name() {
 
     read -p "Needs to restart wifi to apply changes. Do you want to continue? (y/n): " choice
     if [ "${choice,}" == "y" ]; then
-        echo "wifi restarting...."
+        echo "WIFI restarting...."
         sleep 3
         sudo systemctl restart hostapd
     else
