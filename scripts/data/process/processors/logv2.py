@@ -61,7 +61,7 @@ def save_processed_log_file(selected_folder, file_path, log_data):
 
     output_csv = StringIO()
     csv_writer = csv.writer(output_csv)
-    csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+    csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Size (GB)', 'Device Used', 'Browser Used'])
     csv_writer.writerows(log_data)
 
     output_csv.seek(0)
@@ -75,7 +75,7 @@ def create_master_csv(selected_folder, all_log_data):
 
     with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
         csv_writer = csv.writer(master_csv)
-        csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+        csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Size (GB)', 'Device Used', 'Browser Used'])
         
         for log_data in all_log_data:
             csv_writer.writerows(log_data)
