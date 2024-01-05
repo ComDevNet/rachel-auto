@@ -17,41 +17,36 @@ def process_log_file(file_path):
             if match:
                 ip_address, timestamp, request, status_code, response_size_bytes, _, user_agent_string = match.groups()
 
-                # Check if the status code is 200
-                if status_code == '200':
-                    timestamp = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z")
+                timestamp = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z")
 
-                    access_date = timestamp.strftime("%Y-%m-%d")
-                    access_time = timestamp.strftime("%H:%M:%S")
+                access_date = timestamp.strftime("%Y-%m-%d")
+                access_time = timestamp.strftime("%H:%M:%S")
 
-                    path_to_modules = re.sub(r'^GET (.*) HTTP/1.1$', r'\1', request)
-                    decoded_path = unquote(path_to_modules)
-                    cleaned_path = decoded_path.replace('%', '')
+                path_to_modules = re.sub(r'^GET (.*) HTTP/1.1$', r'\1', request)
+                decoded_path = unquote(path_to_modules)
+                cleaned_path = decoded_path.replace('%', '')
 
-                    module_name_match = re.search(r'/modules/([^/]+)/', cleaned_path)
-                    if module_name_match:
-                        module_name = module_name_match.group(1)
-                    else:
-                        module_name = 'none'
+                module_name_match = re.search(r'/modules/([^/]+)/', cleaned_path)
+                if module_name_match:
+                    module_name = module_name_match.group(1)
+                else:
+                    module_name = 'none'
 
-                    # Extract the location from the path and remove ".html" extension
-                    location_match = re.search(r'/modules/[^/]+/([^/]+)\.html', cleaned_path)
-                    location_viewed = location_match.group(1) if location_match else 'none'
+                location_match = re.search(r'/modules/[^/]+/([^/]+)\.html', cleaned_path)
+                location_viewed = location_match.group(1) if location_match else 'none'
+                location_viewed = 'Home Page' if location_viewed.lower() == 'index' else location_viewed
 
-                    # Replace "index" with "Home Page"
-                    location_viewed = 'Home Page' if location_viewed.lower() == 'index' else location_viewed
+                user_agent = parse(user_agent_string)
 
-                    user_agent = parse(user_agent_string)
+                os_family = user_agent.os.family.lower() if user_agent.os.family else 'unknown'
+                browser_name = user_agent.browser.family if user_agent.browser.family else 'unknown'
 
-                    os_family = user_agent.os.family.lower() if user_agent.os.family else 'unknown'
+                response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f")
 
-                    browser_name = user_agent.browser.family if user_agent.browser.family else 'unknown'
-
-                    response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f")
-
-                    log_data.append([ip_address, access_date, access_time, module_name, location_viewed, status_code, response_size_gb, os_family, browser_name])
+                log_data.append([ip_address, access_date, access_time, module_name, location_viewed, status_code, response_size_gb, os_family, browser_name])
 
     return log_data
+
 
 def save_processed_log_file(selected_folder, file_path, log_data):
     processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
@@ -61,7 +56,7 @@ def save_processed_log_file(selected_folder, file_path, log_data):
 
     output_csv = StringIO()
     csv_writer = csv.writer(output_csv)
-    csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Size (GB)', 'Device Used', 'Browser Used'])
+    csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
     csv_writer.writerows(log_data)
 
     output_csv.seek(0)
@@ -75,7 +70,7 @@ def create_master_csv(selected_folder, all_log_data):
 
     with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
         csv_writer = csv.writer(master_csv)
-        csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Size (GB)', 'Device Used', 'Browser Used'])
+        csv_writer.writerow(['IP Address', 'Access Date', 'Access Time', 'Module Viewed', 'Location Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
         
         for log_data in all_log_data:
             csv_writer.writerows(log_data)

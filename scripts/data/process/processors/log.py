@@ -17,33 +17,31 @@ def process_log_file(file_path):
             if match:
                 ip_address, timestamp, request, status_code, response_size_bytes, _, user_agent_string = match.groups()
 
-                # Add a condition to check for status code 200
-                if status_code == '200':
-                    # Parse the timestamp into the desired format
-                    timestamp = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z").strftime("%Y-%m-%d")
+                # Parse the timestamp into the desired format
+                timestamp = datetime.strptime(timestamp, "%d/%b/%Y:%H:%M:%S %z").strftime("%Y-%m-%d")
 
-                    path_to_modules = re.sub(r'^GET (.*) HTTP/1.1$', r'\1', request)
-                    decoded_path = unquote(path_to_modules)
-                    cleaned_path = decoded_path.replace('%', '')
+                path_to_modules = re.sub(r'^GET (.*) HTTP/1.1$', r'\1', request)
+                decoded_path = unquote(path_to_modules)
+                cleaned_path = decoded_path.replace('%', '')
 
-                    # Extract the module name from the path
-                    module_name_match = re.search(r'/modules/([^/]+)/', cleaned_path)
-                    if module_name_match:
-                        module_name = module_name_match.group(1)
-                    else:
-                        module_name = 'none'
+                # Extract the module name from the path
+                module_name_match = re.search(r'/modules/([^/]+)/', cleaned_path)
+                if module_name_match:
+                    module_name = module_name_match.group(1)
+                else:
+                    module_name = 'none'
 
-                    user_agent = parse(user_agent_string)
+                user_agent = parse(user_agent_string)
 
-                    # Use user_agent.os.family directly as the device_type
-                    device_type = user_agent.os.family
+                # Use user_agent.os.family directly as the device_type
+                device_type = user_agent.os.family
 
-                    browser_name = user_agent.browser.family if user_agent.browser.family else 'unknown'
+                browser_name = user_agent.browser.family if user_agent.browser.family else 'unknown'
 
-                    # Convert response size from bytes to Gigabytes
-                    response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f") 
+                # Convert response size from bytes to Gigabytes
+                response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f") 
 
-                    log_data.append([ip_address, timestamp, module_name, status_code, response_size_gb, device_type, browser_name])
+                log_data.append([ip_address, timestamp, module_name, status_code, response_size_gb, device_type, browser_name])
 
     return log_data
 
