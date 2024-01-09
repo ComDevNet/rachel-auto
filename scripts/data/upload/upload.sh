@@ -5,9 +5,9 @@ s3_bucket="s3://rachel-upload-test"
 # Display all folders with 'log' in their name
 echo "Available folders:"
 folders=(00_DATA/00_PROCESSED/*log*/)
-echo "Enter the number of the folder you want to upload:"
 select folder in "${folders[@]}"; do
     if [ -n "$folder" ]; then
+    echo "Enter the number of the folder you want to upload:"
         break
     else
         echo "Invalid selection. Please try again."
