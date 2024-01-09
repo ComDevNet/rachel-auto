@@ -7,7 +7,7 @@ echo ""
 echo ""
 
 # Display the name of the tool
-figlet -c -t -f 3d "DATA PROCESSING" | lolcat
+figlet -c -t -f 3d "PROCESSING" | lolcat
 
 echo ""
 
