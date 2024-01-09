@@ -48,7 +48,11 @@ if [ -e "$folder/$processed_filename" ]; then
     # Upload the new file to S3
     aws s3 cp "$folder/$processed_filename" "$s3_bucket/${selected_bucket}/Rachel/$processed_filename"
 
-    echo "Data upload completed successfully."
+    echo "Data upload completed successfully. Returning to main menu..."
+    sleep 2
+    exec ./scripts/data/upload/main.sh
 else
     echo "Exiting. The processed file does not exist or the process was not successful."
+    sleep 2
+    exec ./scripts/data/upload/main.sh
 fi

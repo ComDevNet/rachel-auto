@@ -17,7 +17,8 @@ else
     if [[ $choice == "y" ]]; then
         aws configure
     else
-        echo "AWS CLI configuration skipped."
+     echo ""
+        echo "AWS CLI configuration skipped. Returning to the main menu..."
         sleep 2
         exec ./scripts/data/upload/main.sh
     fi
