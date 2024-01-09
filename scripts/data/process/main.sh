@@ -51,7 +51,7 @@ case $choice in
         ./scripts/data/collection/main.sh
         ;;
     5)
-        ./scripts/data/main.sh
+        ./scripts/data/upload/main.sh
         ;;
     6)
         ./scripts/data/main.sh
