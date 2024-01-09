@@ -54,6 +54,7 @@ sudo chmod +x scripts/data/all/process/*.sh
 sudo chmod +x scripts/data/collection/*.sh
 sudo chmod +x scripts/data/process/*.sh
 sudo chmod +x scripts/data/process/all/*.sh
+sudo chmod +x scripts/data/upload/*.sh
 
 
 exec ./main.sh
