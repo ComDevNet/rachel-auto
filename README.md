@@ -33,4 +33,6 @@ chmod +x install.sh
 - [x] Process Logs
 - [x] Collect Content Request File
 - [x] Disconnect from VPN Network
-- [ ] Upload Data to Server
+- [x] Change Wifi Name
+- [x] Add wifi Password
+- [x] Upload Data to Server
