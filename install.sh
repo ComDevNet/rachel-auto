@@ -35,6 +35,9 @@ else
     echo "Do you want to configure it? (y/n)"
     read -p "" user_input
     if [ "$user_input" = "y" ]; then
+    echo ""
+    echo "Running AWS CLI configuration..."
+    sleep 1
     aws configure
     fi
 fi

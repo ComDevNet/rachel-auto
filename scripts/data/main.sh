@@ -47,7 +47,7 @@ case $choice in
         ./scripts/data/process/main.sh
         ;;
     4)
-        ./scripts/data/upload.sh
+        ./scripts/data/upload/upload.sh
         ;;
     5)
         ./main.sh
