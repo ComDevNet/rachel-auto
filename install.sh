@@ -10,8 +10,8 @@ sudo date --set="$user_datetime"
 sudo apt update && sudo apt upgrade -y
 
 # install figlet and lolcat
-sudo apt-get install figlet
-sudo apt-get install lolcat
+sudo apt-get install figlet -y
+sudo apt-get install lolcat -y
 
 # install 3d.tlf figlet font
 wget https://raw.githubusercontent.com/xero/figlet-fonts/master/3d.flf
@@ -21,6 +21,23 @@ sudo mv 3d.flf /usr/share/figlet/
 pip3 install -r requirements.txt
 pip install -r requirements.txt
 pip3 install user-agents
+
+# install aws-cli
+sudo apt install awscli -y
+
+# configure aws-cli
+if [ -f ~/.aws/config ]; then
+    echo "AWS CLI already configured."
+    echo "Continuing with installation..."
+    sleep 1
+else
+    echo "AWS CLI not configured."
+    echo "Do you want to configure it? (y/n)"
+    read -p "" user_input
+    if [ "$user_input" = "y" ]; then
+    aws configure
+    fi
+fi
 
 
 # make the scripts executable
