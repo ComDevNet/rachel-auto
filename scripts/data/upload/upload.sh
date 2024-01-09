@@ -5,7 +5,9 @@ s3_bucket="s3://rachel-upload-test"
 # Display all folders with 'log' in their name
 echo "Available folders:"
 folders=(00_DATA/00_PROCESSED/*log*/)
-echo "Please enter the number of the folder you want to select:"
+
+PS3="Please enter the number of the folder you want to select: "
+
 select folder in "${folders[@]}"; do
     if [ -n "$folder" ]; then
         echo "You selected $folder"
