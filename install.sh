@@ -21,6 +21,7 @@ sudo mv 3d.flf /usr/share/figlet/
 pip3 install -r requirements.txt
 pip install -r requirements.txt
 pip3 install user-agents
+pip3 install tqdm
 
 # install aws-cli
 sudo apt install awscli -y
