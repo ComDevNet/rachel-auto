@@ -19,7 +19,7 @@ chmod +x install.sh
 ```
 ./main.sh
 ```
-## Things Automated
+## Things Simplified
 - [x] Update the system
 - [x] Update the Rachel Interface
 - [x] Update Script
