@@ -22,6 +22,10 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     sudo sed -i "s|s3_bucket=.*|s3_bucket=$new_location|" scripts/data/upload/upload.sh
 
     echo "s3_bucket location updated successfully."
+    sleep 2
+    exec ./scripts/data/upload/main.sh
 else
     echo "s3_bucket location remains unchanged."
+    sleep 2
+    exec ./scripts/data/upload/main.sh
 fi
