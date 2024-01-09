@@ -22,6 +22,9 @@ echo ""
 echo "Please type the location of the device:"
 read location
 
+# Replace spaces with underscores
+location=${location// /_}
+
 # Ask user for the desired month
 while true; do
     read -p "Please enter the starting month for filtering (1-12): " month
