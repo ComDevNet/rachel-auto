@@ -18,7 +18,8 @@ select folder in "${folders[@]}"; do
 done
 
 # Ask user for the location name
-echo "Please enter the name of the location:"
+echo ""
+echo "Please type the location of the device:"
 read location
 
 # Ask user for the desired month
@@ -44,7 +45,8 @@ echo "Available S3 buckets:"
 aws s3 ls $s3_bucket/
 
 # Ask the user to pick a bucket
-read -p "Enter the selected S3 bucket: " selected_bucket
+echo ""
+read -p "Enter the name of the S3 bucket: " selected_bucket
 
 # Check if the processed file exists before attempting to upload
 processed_filename="${location}_${month}_${year}_access_logs.csv"
