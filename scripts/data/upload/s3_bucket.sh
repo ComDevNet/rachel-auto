@@ -16,7 +16,7 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     # Ask for the new location
     echo ""
     echo "Enter the full s3_bucket location, e.g. s3://my-bucket-name"
-    read -p "Enter the new s3_bucket location: " new_location
+    read -p "New s3_bucket location: " new_location
 
     # Update the upload.sh file with the new location
     sudo sed -i "s|s3_bucket=.*|s3_bucket=$new_location|" scripts/data/upload/upload.sh
