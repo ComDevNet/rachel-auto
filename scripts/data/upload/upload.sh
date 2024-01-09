@@ -33,7 +33,7 @@ done
 cp "$folder/summary.csv" "$folder/summary_copy.csv"
 
 # Call Python script to process the copied CSV file and get the year
-year=$(python3 process_csv.py "$folder" "$location" "$month" "access_logs.csv")
+year=$(python3 scripts/data/upload/process_csv.py "$folder" "$location" "$month" "access_logs.csv")
 
 # Display all AWS S3 buckets
 echo "Available S3 buckets:"

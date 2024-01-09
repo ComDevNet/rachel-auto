@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Read the current s3_bucket variable from upload.sh
-s3_bucket=$(grep -oP '(?<=s3_bucket=).+' upload.sh)
+s3_bucket=$(grep -oP '(?<=s3_bucket=).+' scripts/data/upload/upload.sh)
 
 # Display the current s3_bucket variable
 echo "Current s3_bucket: $s3_bucket"
@@ -19,7 +19,7 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     read -p "Enter the new s3_bucket location: " new_location
 
     # Update the upload.sh file with the new location
-    sudo sed -i "s|s3_bucket=.*|s3_bucket=$new_location|" upload.sh
+    sudo sed -i "s|s3_bucket=.*|s3_bucket=$new_location|" scripts/data/upload/upload.sh
 
     echo "s3_bucket location updated successfully."
 else
