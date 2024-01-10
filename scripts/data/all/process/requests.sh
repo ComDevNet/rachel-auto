@@ -44,3 +44,4 @@ echo "Running upload script..."
 sleep 1.5
 
 exec ./scripts/data/upload/upload.sh
+sleep 4

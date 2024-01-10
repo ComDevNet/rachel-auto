@@ -43,6 +43,18 @@ else
     fi
 fi
 
+# Create the 'bin' directory
+mkdir -p ~/bin
+
+# Create a symbolic link to your script
+ln -s ~/rachel-auto/main.sh ~/bin/rachel-auto
+
+# Add the 'bin' directory to PATH in ~/.bashrc
+echo 'export PATH=$PATH:~/bin' >> ~/.bashrc
+
+# Source the updated profile
+source ~/.bashrc
+
 
 # make the scripts executable
 sudo chmod +x *.sh
