@@ -4,7 +4,7 @@ clear
 echo ""
 echo ""
 echo "Collecting Logs and Requests ........."
-sleep 2
+sleep 1.5
 
 # Collecting the log files
 # Prompt the user for the location of the device

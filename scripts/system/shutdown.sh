@@ -9,8 +9,8 @@ if [ "$user_response" == "y" ]; then
     # Execute the reboot command
     sudo shutdown -h now
 else
-    echo "Shutdown canceled. Returning to main menu in 2 seconds..."
+    echo "Shutdown canceled. Returning to main menu..."
+    sleep 1.5
+    exec ./scripts/system/main.sh
 fi
 
-sleep 2
-exec ./scripts/system/main.sh

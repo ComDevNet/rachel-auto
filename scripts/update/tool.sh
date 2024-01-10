@@ -40,6 +40,6 @@ sudo chmod +x scripts/data/upload/*.sh
 cd "$current_directory"
 
 # Sleep and return to the main menu
-echo "Returning to the main menu in 2 seconds..."
-sleep 2
+echo "Returning to the main menu..."
+sleep 1.5
 exec ./scripts/update/main.sh

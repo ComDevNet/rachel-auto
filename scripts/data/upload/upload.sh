@@ -2,6 +2,12 @@
 
 s3_bucket="s3://rachel-upload-test"
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
+
 # Display all folders with 'log' in their name
 echo "Available folders:"
 folders=(00_DATA/00_PROCESSED/*log*/)
@@ -57,11 +63,11 @@ if [ -e "$folder/$processed_filename" ]; then
     # Upload the new file to S3
     aws s3 cp "$folder/$processed_filename" "$s3_bucket/${selected_bucket}/Rachel/$processed_filename"
 
-    echo "Data upload completed successfully. Returning to main menu..."
-    sleep 5
+    echo -e "${GREEN}Data upload completed successfully.${NC} Returning to main menu..."
+    sleep 2
     exec ./scripts/data/upload/main.sh
 else
-    echo "Exiting. The processed file does not exist or the process was not successful."
+    echo -e "${RED}The processed file does not exist or the process was not successful.${NC}"
     sleep 2
     exec ./scripts/data/upload/main.sh
 fi

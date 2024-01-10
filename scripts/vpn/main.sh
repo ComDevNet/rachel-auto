@@ -21,14 +21,15 @@ echo ""
 # variables
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+DARK_GRAY='\033[1;30m'
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Connect"
-echo "2. Check Status"
-echo "3. Disconnect"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo -e "1. Connect           ${DARK_GRAY}-| Connect to the Zerotier Network${NC}"
+echo -e "2. Check Status      ${DARK_GRAY}-| Check the status of the Zerotier Network${NC}"
+echo -e "3. Disconnect        ${DARK_GRAY}-| Disconnect from the Zerotier Network${NC}"
+echo -e "${GREEN}4. Go Back           ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}5. Exit              ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -53,7 +54,7 @@ case $choice in
         ;;
     *)
         echo "Invalid choice. Please choose a number between 1 and 4."
-        sleep 3
+        sleep 1.5
         exec ./scripts/vpn/main.sh
         ;;
 esac

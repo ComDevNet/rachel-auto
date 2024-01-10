@@ -16,8 +16,8 @@ echo ""
 
 # Display a message about the update
 echo "System has been updated successfully."
-echo "Returning to the main menu in 2 seconds..."
-sleep 2
+echo "Returning to the main menu..."
+sleep 1.5
 
 # Return to the main script
 exec ./scripts/update/main.sh

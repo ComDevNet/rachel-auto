@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
+
 # Define the path to the hostapd configuration file
 HOSTAPD_CONF="/etc/hostapd/hostapd.conf"
 
@@ -19,7 +25,7 @@ change_password() {
     show_current_password
     read -p "Enter the new WiFi password: " new_password
     sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$HOSTAPD_CONF"
-    echo "WiFi password changed."
+    echo -e "${GREEN}WiFi password changed.${NC}"
     echo "Restarting WiFi to apply changes..."
     sleep 2
     sudo systemctl restart hostapd
@@ -29,7 +35,7 @@ change_password() {
 remove_password() {
     sudo sed -i -e '/^wpa=/d; /^wpa_passphrase=/d; /^wpa_key_mgmt=/d; /^wpa_pairwise=/d; /^rsn_pairwise=/d; /^ieee80211n=/d; /^ht_capab=/d; /^country_code=/d' "$HOSTAPD_CONF"
     sudo sed -i "s/^wmm_enabled=.*/wmm_enabled=0/" "$HOSTAPD_CONF"
-    echo "WiFi password removed."
+    echo -e "${GREEN}WiFi password removed.${NC}"
     echo "Restarting WiFi to apply changes..."
     sleep 2
     sudo systemctl restart hostapd
@@ -53,7 +59,7 @@ add_password() {
     sudo sed -i "s/^\(wpa_passphrase\s*=\s*\).*/\1$new_password/" "$destination_dir""hostapd.conf"
     sudo sed -i "s/^\(ssid\s*=\s*\).*/\1$new_ssid/" "$destination_dir""hostapd.conf"
 
-    echo "WiFi password and Name added."
+    echo -e "${GREEN}WiFi password and Name added.${NC}"
     echo "Restarting WiFi to apply changes..."
     sleep 2
 
@@ -82,11 +88,13 @@ if check_password_presence; then
             ;;
         3)
             echo "Going back to the Main Menu..."
-            sleep 3
+            sleep 1.5
             exec ./scripts/system/main.sh
             ;;
         *)
-            echo "Invalid option. Going back to the main menu."
+            echo -e "${RED}Invalid option. Going back to the main menu.${NC}"
+            sleep 1.5
+            exec ./scripts/system/wifi-password.sh
             ;;
     esac
 else
@@ -97,7 +105,7 @@ else
         add_password
     else
         echo "No password added. Going back to the main menu..."
-        sleep 3
+        sleep 2
         exec ./scripts/system/main.sh
     fi
 fi

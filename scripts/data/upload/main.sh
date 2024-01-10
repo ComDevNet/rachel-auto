@@ -21,14 +21,15 @@ echo ""
 # variables
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+DARK_GRAY='\033[1;30m'
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Upload Data"
-echo "2. Configure AWS CLI"
-echo "3. Change s3 Bucket"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo -e "1. Upload Data           ${DARK_GRAY}-| Upload your processed Logs to AWS S3 Bucket${NC}"
+echo -e "2. Configure AWS CLI     ${DARK_GRAY}-| Configure AWS CLI${NC}"
+echo -e "3. Change s3 Bucket      ${DARK_GRAY}-| Change s3 Bucket URI${NC}"
+echo -e "${GREEN}4. Go Back               ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}5. Exit                  ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -46,7 +47,7 @@ case $choice in
         ./scripts/data/upload/s3_bucket.sh
         ;;
     4)
-        ./main.sh
+        ./scripts/data/main.sh
         ;;
     5)
         ./exit.sh
@@ -54,7 +55,7 @@ case $choice in
     *)
         echo -e "${RED}Invalid choice. Please choose a number between 1 and 5."
         echo -e "${NC}"
-        sleep 4
+        sleep 1.5
         exec ./scripts/data/upload/main.sh
         ;;
 esac

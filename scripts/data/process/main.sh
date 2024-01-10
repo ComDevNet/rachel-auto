@@ -22,15 +22,16 @@ echo ""
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo "1. Start"
-echo "2. Process Logs"
-echo "3. Process Requests"
-echo "4. Data Collection"
-echo "5. Data Upload"
-echo -e "${GREEN}6. Go Back"
-echo -e "${RED}7. Exit"
+echo -e "1. Start               ${DARK_GRAY}-| Process all your data${NC}"
+echo -e "2. Process Logs        ${DARK_GRAY}-| Process your Rachel logs only${NC}"
+echo -e "3. Process Requests    ${DARK_GRAY}-| Process your Rachel request files only${NC}"
+echo -e "4. Data Collection     ${DARK_GRAY}-| Run the Data Collection Scripts${NC}"
+echo -e "5. Data Upload         ${DARK_GRAY}-| Run the Data Upload Scripts${NC}"
+echo -e "${GREEN}6. Go Back             ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}7. Exit                ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -60,8 +61,8 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo -e "${RED}Invalid choice. Please choose a number between 1 and 7."
-        sleep 2
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 7.${NC}"
+        sleep 1.5
         exec ./scripts/data/process/main.sh
         ;;
 esac

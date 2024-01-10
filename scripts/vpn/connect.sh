@@ -19,8 +19,8 @@ sudo zerotier-cli join "$network_id"
 sudo touch "/var/lib/zerotier-one/networks.d/$network_id.conf"
 
 # Display a success message and wait for 5 seconds
-echo "ZeroTier network joined successfully. Returning to script in 2 seconds..."
-sleep 2
+echo "ZeroTier network joined successfully. Returning to main menu..."
+sleep 1.5
 
 # Return to the main script
 exec ./scripts/vpn/main.sh

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
+
 # Define the path to the hostapd configuration file
 HOSTAPD_CONF="/etc/hostapd/hostapd.conf"
 
@@ -18,11 +24,11 @@ change_wifi_name() {
     read -p "Needs to restart wifi to apply changes. Do you want to continue? (y/n): " choice
     if [ "${choice,}" == "y" ]; then
         echo "WIFI restarting...."
-        sleep 3
+        sleep 1.5
         sudo systemctl restart hostapd
     else
         echo "Wifi name changes will be applied after device has been rebooted. Returning to main menu...."
-        sleep 3
+        sleep 2
         exec ./scripts/system/main.sh
     fi
 }
@@ -38,8 +44,8 @@ if [ "${choice,}" == "y" ]; then
     change_wifi_name
 elif [ "${choice,}" == "n" ]; then
     echo "Returning to Main Menu....."
-    sleep 3
+    sleep 2
     exec ./scripts/system/main.sh
 else
-    echo "Invalid choice. Please enter 'y' or 'n'."
+    echo -e "${RED}Invalid choice. Please enter 'y' or 'n'.${NC}"
 fi

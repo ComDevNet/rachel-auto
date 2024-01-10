@@ -12,7 +12,7 @@ read -p "Do you want to connect to a different network? (y/n): " user_response
 if [[ "$user_response" =~ ^[Yy]$ ]]; then
     exec ./scripts/vpn/connect.sh
 else
-    echo "Returning to the main menu in 2 seconds..."
-    sleep 2
+    echo "Returning to the main menu..."
+    sleep 1.5
     exec ./scripts/vpn/main.sh
 fi

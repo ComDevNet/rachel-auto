@@ -22,14 +22,15 @@ echo ""
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo "1. Start"
-echo "2. Collect Logs"
-echo "3. Collect Request File"
-echo "4. Data Processing"
-echo -e "${GREEN}5. Go Back"
-echo -e "${RED}6. Exit"
+echo -e "1. Start                  ${DARK_GRAY}-| Start Collection process${NC}"
+echo -e "2. Collect Logs           ${DARK_GRAY}-| Collect the logs from the Rachel${NC}"
+echo -e "3. Collect Request File   ${DARK_GRAY}-| Collect the request file from the Rachel${NC}"
+echo -e "4. Data Processing        ${DARK_GRAY}-| Run processing script${NC}"
+echo -e "${GREEN}5. Go Back                ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}6. Exit                   ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -56,8 +57,8 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo -e "${RED}Invalid choice. Please choose a number between 1 and 6."
-        sleep 3
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 6.${NC}"
+        sleep 1.5
         exec ./scripts/data/collection/main.sh
         ;;
 esac

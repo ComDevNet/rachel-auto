@@ -31,7 +31,7 @@ if [[ ! $folder_number =~ ^[1-9][0-9]*$ || $folder_number -gt ${#folders[@]} ]];
     echo ""
     echo -e "${RED}Invalid input. Please enter a valid folder number."
     echo -e "${NC}"
-    exec ./scripts/data/process/requests.sh
+    exec ./scripts/data/all/process/requests.sh
 fi
 
 # Construct the full path to the selected folder
@@ -40,6 +40,7 @@ selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 # Run the Python script with the selected folder as an argument
 python3 "$python_script_path" "$selected_folder"
 
-echo "Returning to the main menu in 5 seconds..."
-    sleep 5
-    exec ./scripts/data/main.sh
+echo "Running upload script..."
+sleep 1.5
+
+exec ./scripts/data/upload/upload.sh

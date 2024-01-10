@@ -21,15 +21,16 @@ echo ""
 # variables
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+DARK_GRAY='\033[1;30m'
 GREEN='\033[0;32m'
 
 # Display menu options
-echo "1. Start"
-echo "2. Collect Data"
-echo "3. Process Data"
-echo "4. Upload Data"
-echo -e "${GREEN}5. Go Back"
-echo -e "${RED}6. Exit"
+echo -e "1. Start            ${DARK_GRAY}-| Collect, Process, and Upload all your data${NC}"
+echo -e "2. Collect          ${DARK_GRAY}-| Collect your Rachel logs and request files${NC}"
+echo -e "3. Process          ${DARK_GRAY}-| Process your Rachel logs and request files${NC}"
+echo -e "4. Upload           ${DARK_GRAY}-| Upload your Rachel logs to an AWS s3 Bucket${NC}"
+echo -e "${GREEN}5. Go Back          ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}6. Exit             ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -58,7 +59,7 @@ case $choice in
     *)
         echo -e "${RED}Invalid choice. Please choose a number between 1 and 6."
         echo -e "${NC}"
-        sleep 4
+        sleep 1.5
         exec ./scripts/data/main.sh
         ;;
 esac

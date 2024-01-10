@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# variables
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
+
 # Read the current s3_bucket variable from upload.sh
 s3_bucket=$(grep -oP '(?<=s3_bucket=).+' scripts/data/upload/upload.sh)
 
@@ -21,11 +27,11 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     # Update the upload.sh file with the new location
     sudo sed -i "s|s3_bucket=.*|s3_bucket=$new_location|" scripts/data/upload/upload.sh
 
-    echo "s3_bucket location updated successfully. Returning to main menu..."
-    sleep 2
+    echo -e "${GREEN}s3_bucket location updated successfully.${NC} Returning to main menu..."
+    sleep 1.5
     exec ./scripts/data/upload/main.sh
 else
-    echo "s3_bucket location remains unchanged. Returning to main menu..."
-    sleep 2
+    echo -e "${RED}s3_bucket location remains unchanged.${NC} Returning to main menu..."
+    sleep 1.5
     exec ./scripts/data/upload/main.sh
 fi

@@ -24,13 +24,14 @@ echo ""
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo "1. System"
-echo "2. Interface"
-echo "3. Tool"
-echo -e "${GREEN}4. Go Back"
-echo -e "${RED}5. Exit"
+echo -e "1. System       ${DARK_GRAY}-| Update the Raspberry Pi${NC}"
+echo -e "2. Interface    ${DARK_GRAY}-| Update the Rachel Interface${NC}"
+echo -e "3. Tool         ${DARK_GRAY}-| Update this tool${NC}"
+echo -e "${GREEN}4. Go Back      ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}5. Exit         ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -55,5 +56,7 @@ case $choice in
         ;;
     *)
         echo "Invalid choice. Please choose a number between 1 and 5."
+        sleep 1.5
+        exec ./scripts/update/main.sh
         ;;
 esac

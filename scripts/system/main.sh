@@ -22,16 +22,17 @@ echo ""
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo "1. Change Interface"
-echo "2. Change WIFI Name"
-echo "3. Wifi Password"
-echo "4. Raspberry Pi Configuration"
-echo "5. Reboot"
-echo "6. Shutdown"
-echo -e "${GREEN}7. Go Back"
-echo -e "${RED}8. Exit"
+echo -e "1. Change Interface            ${DARK_GRAY}-| Change the files in the www folder${NC}"
+echo -e "2. WIFI Name                   ${DARK_GRAY}-| Change the WIFI signal name${NC}"
+echo -e "3. Wifi Password               ${DARK_GRAY}-| Change the WIFI signal password${NC}"
+echo -e "4. Raspberry Pi Configuration  ${DARK_GRAY}-| Run raspi-config${NC}"
+echo -e "5. Reboot                      ${DARK_GRAY}-| Reboot the system${NC}"
+echo -e "6. Shutdown                    ${DARK_GRAY}-| Shutdown the system${NC}"
+echo -e "${GREEN}7. Go Back                     ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}8. Exit                        ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -64,6 +65,8 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 8."
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 8.${NC}"
+        sleep 1.5
+        exec ./scripts/system/main.sh
         ;;
 esac

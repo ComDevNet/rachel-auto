@@ -24,13 +24,14 @@ echo ""
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 GREEN='\033[0;32m'
+DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo "1. Update"
-echo "2. VPN"
-echo "3. Data"
-echo "4. System"
-echo -e "${RED}5. Exit"
+echo -e "1. Update   ${DARK_GRAY}-| Update the Raspberry pi, Rachel Interface, and Program${NC}"
+echo -e "2. VPN      ${DARK_GRAY}-| Install and configure the Zero-tier VPN${NC}"
+echo -e "3. Data     ${DARK_GRAY}-| Collect, Process and Ppload the access logs and request file${NC}"
+echo -e "4. System   ${DARK_GRAY}-| Change the system settings${NC}"
+echo -e "${RED}5. Exit     ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
@@ -54,8 +55,8 @@ case $choice in
         ./exit.sh
         ;;
     *)
-        echo "Invalid choice. Please choose a number between 1 and 5."
-        sleep 2
+        echo -e "${RED}Invalid choice. Please choose a number between 1 and 5.${NC}"
+        sleep 1.5
         exec ./main.sh
         ;;
 esac

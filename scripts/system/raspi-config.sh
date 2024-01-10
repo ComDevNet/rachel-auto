@@ -9,8 +9,8 @@ if [ "$user_response" == "y" ]; then
     # Execute the reboot command
     sudo raspi-config
 else
-    echo "Returning to main menu in 2 seconds..."
+    echo "Returning to main menu..."
 fi
 
-sleep 2
+sleep 1.5
 exec ./scripts/system/main.sh
