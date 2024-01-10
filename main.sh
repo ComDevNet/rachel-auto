@@ -3,6 +3,9 @@
 # clear the screen
 clear
 
+# Change directory to the script's location
+cd "$(dirname "$(readlink -f "$0")")"
+
 echo ""
 echo ""
 
