@@ -61,7 +61,7 @@ read -p "Enter the name of the S3 bucket: " selected_bucket
 processed_filename="${location}_${month}_${year}_access_logs.csv"
 if [ -e "$folder/$processed_filename" ]; then
     # Upload the new file to S3
-    aws s3 cp "$folder/$processed_filename" "$s3_bucket/${selected_bucket}/Rachel/$processed_filename"
+    aws s3 cp "$folder/$processed_filename" "$s3_bucket/${selected_bucket}/RACHEL/$processed_filename"
 
     echo -e "${GREEN}Data upload completed successfully.${NC} Returning to main menu..."
     sleep 4
