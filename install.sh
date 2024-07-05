@@ -23,6 +23,9 @@ pip install -r requirements.txt
 pip3 install user-agents
 pip3 install tqdm
 
+# install zerotier-cli
+curl -s https://install.zerotier.com | sudo bash
+
 # install aws-cli
 sudo apt install awscli -y
 
