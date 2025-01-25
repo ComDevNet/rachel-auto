@@ -36,7 +36,7 @@ def process_log_file(file_path):
 
                     # Parse user agent
                     user_agent = parse(groups["user_agent"])
-                    device_type = user_agent.os.family
+                    device_type = user_agent.os.family if user_agent.os.family else "unknown"
                     browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
 
                     # Set response size to "0.00000" (as the size field is not present in the logs)
