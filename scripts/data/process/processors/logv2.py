@@ -1,6 +1,6 @@
 import os
 import csv
-import re
+import json
 from datetime import datetime
 from user_agents import parse
 import sys
@@ -13,38 +13,48 @@ def process_log_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as log_file:
         lines = log_file.read().splitlines()
         for line in lines:
-            match = re.search(
-                r'(?P<ip>[\d.]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>GET|POST) (?P<path>[^\s]+) HTTP/1.1" (?P<status_code>\d+) (?P<size>\d+) "(?P<referrer>[^"]*)" "(?P<user_agent>[^"]*)"',
-                line,
-            )
-            if match:
-                groups = match.groupdict()
+            try:
+                # Parse the JSON object
+                log_entry = json.loads(line)
+                message = log_entry.get("message", "")
 
-                # Parse timestamp
-                timestamp = datetime.strptime(groups["timestamp"], "%d/%b/%Y:%H:%M:%S %z").strftime("%Y-%m-%d")
+                # Extract details from the log message
+                match = re.search(
+                    r'(?P<ip>[\d.]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>GET|POST) (?P<path>[^\s]+) HTTP/1.1" (?P<status_code>\d+) - "(?P<referrer>[^"]*)" "(?P<user_agent>[^"]*)"',
+                    message,
+                )
+                if match:
+                    groups = match.groupdict()
 
-                # Extract module name from path
-                module_match = re.search(r'/modules/([^/]+)/', groups["path"])
-                module_name = module_match.group(1) if module_match else "none"
+                    # Parse timestamp
+                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
 
-                # Parse user agent
-                user_agent = parse(groups["user_agent"])
-                device_type = user_agent.os.family
-                browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
+                    # Extract module name from path
+                    module_match = re.search(r'/modules/([^/]+)/', groups["path"])
+                    module_name = module_match.group(1) if module_match else "none"
 
-                # Convert response size to GB
-                response_size_gb = format(int(groups["size"]) / 1073741824, ".5f")
+                    # Parse user agent
+                    user_agent = parse(groups["user_agent"])
+                    device_type = user_agent.os.family
+                    browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
 
-                # Append the data to the log_data list
-                log_data.append([
-                    groups["ip"],
-                    timestamp,
-                    module_name,
-                    groups["status_code"],
-                    response_size_gb,
-                    device_type,
-                    browser_name,
-                ])
+                    # Convert response size to GB (if needed, set to 0 since the logs have '-')
+                    response_size_gb = "0.00000"
+
+                    # Append the data to the log_data list
+                    log_data.append([
+                        groups["ip"],
+                        timestamp,
+                        module_name,
+                        groups["status_code"],
+                        response_size_gb,
+                        device_type,
+                        browser_name,
+                    ])
+            except json.JSONDecodeError:
+                print(f"Skipping invalid JSON entry: {line}")
+            except Exception as e:
+                print(f"Error processing line: {line}, Error: {str(e)}")
 
     return log_data
 
@@ -89,7 +99,7 @@ if __name__ == '__main__':
                 file_path = os.path.join(root, file)
                 log_data = process_log_file(file_path)
                 save_processed_log_file(processed_folder_path, file_path, log_data)
-                all_log_data.append(log_data)
+                all_log_data.extend(log_data)
                 processed_files += 1
                 progress = (processed_files / total_files) * 100
                 print(f"\rProcessing files: {processed_files}/{total_files} [{int(progress)}%]", end='', flush=True)

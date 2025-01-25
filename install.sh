@@ -20,8 +20,8 @@ sudo mv 3d.flf /usr/share/figlet/
 # install python3 and pip3
 pip3 install -r requirements.txt
 pip install -r requirements.txt
-pip3 install user-agents
-pip3 install tqdm
+pip3 install user-agents --break-system-packages
+pip3 install tqdm --break-system-packages
 
 # install zerotier-cli
 curl -s https://install.zerotier.com | sudo bash

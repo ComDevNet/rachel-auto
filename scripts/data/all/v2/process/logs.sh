@@ -63,3 +63,18 @@ python3 "$python_script_path" "$selected_folder"
 
 echo ""
 echo "Processing completed successfully."
+
+# Ask the user if they want to upload the data
+read -p "Do you want to upload the processed data? (y/n): " upload_choice
+
+if [[ "$upload_choice" =~ ^[Yy]$ ]]; then
+    echo ""
+    echo "Uploading data..."
+    # Replace with the actual upload script or command
+    exec ./scripts/data/upload/upload.sh
+else
+    echo ""
+    echo "Upload skipped. Returning to the main menu."
+    sleep 2
+    exec ./scripts/data/process/main.sh
+fi
