@@ -6,6 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
+echo ""
 # Check if zerotier-cli is installed
 if ! command -v zerotier-cli &> /dev/null; then
     echo -e "${RED}Error:${NC} zerotier-cli is not installed. Please install it before running this script."
