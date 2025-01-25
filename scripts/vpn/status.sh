@@ -3,6 +3,7 @@
 # Define color variables
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
+GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 echo ""
@@ -10,6 +11,7 @@ echo ""
 # Step 1: Display the raw output of the listnetworks command
 echo -e "${YELLOW}Checking current ZeroTier networks...${NC}"
 echo ""
+echo -e "${GREEN}Active Connection:${NC}"
 sudo zerotier-cli listnetworks | grep "OK"
 echo ""
 # Check if there are any authorized networks
