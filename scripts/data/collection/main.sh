@@ -13,7 +13,7 @@ echo ""
 
 # A border to cover the description and its centered
 echo  "====================================================="
-echo "Collect your Rachel logs and request files with ease"
+echo "Collect your server logs with ease"
 echo "====================================================="
 
 echo ""
