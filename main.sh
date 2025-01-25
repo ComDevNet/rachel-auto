@@ -28,12 +28,12 @@ GREEN='\033[0;32m'
 GRAY='\033[1;30m'
 
 # Display menu options
-echo -e "1. Update        ${GRAY}-| Update the Raspberry pi, Rachel Interface, and Program${NC}"
+echo -e "1. Update        ${GRAY}-| Update the Raspberry pi, and Programs${NC}"
 echo -e "2. VPN           ${GRAY}-| Install and configure the Zero-tier VPN${NC}"
-echo -e "3. Data          ${GRAY}-| Collect, Process and Upload the access logs and request file${NC}"
-echo -e "4. System        ${GRAY}-| Change the system settings${NC}"
-echo -e "5. Troubleshoot  ${GRAY}-| Find out what's wrong with your system${NC}"
-echo -e "${RED}6. Exit          ${GRAY}-| Exit the program${NC}"
+echo -e "3. Data          ${GRAY}-| Collect, Process and Upload logs${NC}"
+echo -e "4. System        ${GRAY}-| Change system settings${NC}"
+echo -e "5. Troubleshoot  ${GRAY}-| Find out what's wrong with your server${NC}"
+echo -e "${RED}6. Exit          ${GRAY}-| Exit CDN Auto${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
