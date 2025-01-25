@@ -18,7 +18,7 @@ mkdir -p "$new_folder"
 
 # Copy only relevant log files (oc4d-*.log, capecoastcastle-*.log) and include compressed files
 # Exclude files like 2oc4d-exceptions-*.log
-find "$log_directory" -type f \( \( -name "oc4d-*.log" -o -name "capecoastcastle-*.log" -o -name "*.gz" \) ! -name "2oc4d-exceptions-*.log" \) -exec cp {} "$new_folder"/ \;
+find "$log_directory" -type f \( \( -name "oc4d-*.log" -o -name "capecoastcastle-*.log" -o -name "*.gz" \) ! -name "oc4d-exceptions-*.log" \) -exec cp {} "$new_folder"/ \;
 
 # Move to the new folder
 cd "$new_folder" || exit
