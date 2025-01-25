@@ -18,10 +18,12 @@ sudo systemctl enable zerotier-one
 
 # Step 3: Wait for the ZeroTier service to stabilize
 echo "Waiting for ZeroTier service to stabilize..."
+echo ""
 sleep 5
 
 # Step 4: Ask the user for the network ID
 read -p "Enter the network ID: " network_id
+echo ""
 
 # Step 5: Join the ZeroTier network
 echo "Joining the ZeroTier network..."
@@ -38,18 +40,23 @@ else
     exit 1
 fi
 
-# Step 7: Ensure only one connection is sent to the ZeroTier dashboard
-# Wait for the network to sync before continuing
-echo "Waiting for network sync to complete..."
-sleep 5
+# Step 7: Wait for authorization
+echo "Waiting for authorization in the ZeroTier dashboard..."
+while true; do
+    network_status=$(sudo zerotier-cli listnetworks | grep "$network_id")
+    if echo "$network_status" | grep -q "OK"; then
+        echo -e "${GREEN}Connection is authorized and active.${NC}"
+        break
+    else
+        echo -e "${RED}Connection is pending authorization. Please authorize it in the ZeroTier dashboard.${NC}"
+        sleep 4
+        clear
+    fi
+done
 
-# Step 8: Verify connection and display feedback
-network_status=$(sudo zerotier-cli listnetworks | grep "$network_id")
-if echo "$network_status" | grep -q "OK"; then
-    echo -e "${GREEN}Connection is active and synchronized.${NC}"
-else
-    echo -e "${RED}Connection is pending authorization in the ZeroTier dashboard.${NC}"
-fi
+# Step 8: Show active connection
+echo "Active ZeroTier connection details:"
+sudo zerotier-cli listnetworks | grep "$network_id"
 
 # Step 9: Prompt the user to press Enter to return to the main menu
 echo "Press Enter to return to the main menu..."
