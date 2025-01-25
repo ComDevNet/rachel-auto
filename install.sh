@@ -50,7 +50,7 @@ fi
 mkdir -p ~/bin
 
 # Create a symbolic link to your script
-ln -s ~/rachel-auto/main.sh ~/bin/rachel-auto
+ln -s ~/cdn-auto/main.sh ~/bin/cdn-auto
 
 # Add the 'bin' directory to PATH in ~/.bashrc
 echo 'export PATH=$PATH:~/bin' >> ~/.bashrc
@@ -71,6 +71,7 @@ sudo chmod +x scripts/data/collection/*.sh
 sudo chmod +x scripts/data/process/*.sh
 sudo chmod +x scripts/data/process/all/*.sh
 sudo chmod +x scripts/data/upload/*.sh
+sudo chmod +x scripts/troubleshoot/*.sh
 
 
 exec ./main.sh

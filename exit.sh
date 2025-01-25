@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "Thank you for using the Rachel Auto Tool"
+echo "Thank you for using the CDN Auto"
 exit 0
