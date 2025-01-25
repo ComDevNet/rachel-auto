@@ -1,6 +1,6 @@
-<h1 align="center"> Rachel Auto Tool </h1>
+<h1 align="center"> CDN Auto </h1>
 
-> This is a tool to simplify some of the basic tasks done on the Rachel Pi. It is designed to be run on a Raspberry Pi running the CDN Rachel but will still work on any Rachel OS. It is not designed to be run on a Windows machine.
+> This is a tool to simplify some of the actions done on the CDN Server. It is designed to be run on a Raspberry Pi running the CDN Server but will still work on any Rachel OS. It is not designed to be run on a Windows machine. Do not run the install script on your machine.
 
 <!-- Image -->
 <p align="center">
@@ -8,18 +8,22 @@
 </p>
 
 ## Installation
-```
-git clone https://github.com/ComDevNet/rachel-auto.git
-cd rachel-auto
+
+```bash
+git clone https://github.com/ComDevNet/cdn-auto.git
+cd cdn-auto
 chmod +x install.sh
 ./install.sh
-``` 
+```
 
 ## Usage
-```
+
+```bash
 ./main.sh
 ```
+
 ## Things Simplified
+
 - [x] Update the system
 - [x] Update the Rachel Interface
 - [x] Update Script
@@ -36,3 +40,4 @@ chmod +x install.sh
 - [x] Change Wifi Name
 - [x] Add wifi Password
 - [x] Upload Data to Server
+- [ ] Troubleshoot System
