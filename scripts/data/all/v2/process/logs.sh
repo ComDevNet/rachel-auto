@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script descriptions
-script1="V1 - For everyday Rachel Logs" 
+script1="V1 - For OC4D Logs"
 script2="V2 - For Cape Coast Castle Logs"
 
 # Display options with descriptions
@@ -23,21 +23,21 @@ fi
 
 # Set the path to the selected Python script
 if [ "$script_number" == "1" ]; then
-  python_script_path="scripts/data/process/processors/log.py"
-elif [ "$script_number" == "2" ]; then  
   python_script_path="scripts/data/process/processors/logv2.py"
+elif [ "$script_number" == "2" ]; then  
+  python_script_path="scripts/data/process/processors/castle.py"
 fi
 
 echo ""
 # Prompt the user to pick a folder from '00_DATA' directory
-echo "Select one of the available available log folders in '00_DATA' directory:"
+echo "Select one of the available log folders in '00_DATA' directory:"
 folders=($(ls -d 00_DATA/*logs*/))  # Filter folders with "logs" in their name
 
 if [ ${#folders[@]} -eq 0 ]; then
     echo ""
-    echo "No log folders found in '00_DATA'. Processing Request file"
-    sleep 5
-    exec ./scripts/data/all/process/requests.sh
+    echo "No log folders found in '00_DATA'. Please ensure logs are available for processing."
+    sleep 3
+    exec ./scripts/data/process/main.sh
 fi
 
 for ((i=0; i<${#folders[@]}; i++)); do
@@ -51,7 +51,7 @@ read -p "Enter the number corresponding to the log folder you want to process: "
 # Validate user input
 if [[ ! $folder_number =~ ^[1-9][0-9]*$ || $folder_number -gt ${#folders[@]} ]]; then
     echo "Invalid input. Please enter a valid folder number. Exiting..."
-    sleep 5
+    sleep 3
     exec ./scripts/data/process/main.sh
 fi
 
@@ -62,6 +62,4 @@ selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 python3 "$python_script_path" "$selected_folder"
 
 echo ""
-echo "Processing Request file"
-    exec ./scripts/data/all/process/requests.sh
-
+echo "Processing completed successfully."
