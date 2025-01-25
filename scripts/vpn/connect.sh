@@ -3,11 +3,13 @@
 # Define color variables
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # This script is used to connect to a ZeroTier network and ensure no duplicate connections appear.
 
 echo ""
+echo -e "${YELLOW}Stopping the ZeroTier service and removing old identities...${NC}"
 # Step 1: Stop the ZeroTier service and remove old identities
 sudo systemctl stop zerotier-one
 sudo rm -rf /var/lib/zerotier-one/identity.secret
@@ -27,7 +29,7 @@ read -p "Enter the network ID: " network_id
 echo ""
 
 # Step 5: Join the ZeroTier network
-echo "Joining the ZeroTier network..."
+echo -e "${YELLOW}Joining the ZeroTier network...${NC}"
 echo ""
 join_output=$(sudo zerotier-cli join "$network_id" 2>&1)
 
