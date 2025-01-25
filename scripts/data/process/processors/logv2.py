@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-import re  # Ensure the 're' module is imported
+import re
 from datetime import datetime
 from user_agents import parse
 import sys
@@ -27,8 +27,8 @@ def process_log_file(file_path):
                 if match:
                     groups = match.groupdict()
 
-                    # Parse timestamp
-                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%d")
+                    # Parse timestamp to match the log format
+                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
 
                     # Extract module name from path
                     module_match = re.search(r'/modules/([^/]+)/', groups["path"])
@@ -54,8 +54,10 @@ def process_log_file(file_path):
                     ])
             except json.JSONDecodeError:
                 print(f"Skipping invalid JSON entry: {line}")
+            except ValueError as e:
+                print(f"Error processing line: {line}, Error: {e}")
             except Exception as e:
-                print(f"Error processing line: {line}, Error: {str(e)}")
+                print(f"Unexpected error processing line: {line}, Error: {str(e)}")
 
     return log_data
 
