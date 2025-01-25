@@ -16,9 +16,17 @@ log_directory="/var/log/oc4d"
 new_folder="${device_location}_logs_$(date '+%Y_%m_%d')"
 mkdir -p "$new_folder"
 
-# Copy only relevant log files (oc4d-*.log, capecoastcastle-*.log) and include compressed files
-# Exclude files like 2oc4d-exceptions-*.log
-find "$log_directory" -type f \( \( -name "oc4d-*.log" -o -name "capecoastcastle-*.log" -o -name "*.gz" \) ! -name "oc4d-exceptions-*.log" \) -exec cp {} "$new_folder"/ \;
+# Copy only relevant log files (oc4d-*.log, capecoastcastle-*.log, *.gz)
+# Exclude files like oc4d-exceptions-*.log and capecoastcastle-exceptions-*.log
+find "$log_directory" -type f \
+    \( \
+        \( -name "oc4d-*.log" ! -name "oc4d-exceptions-*.log" \) \
+        -o \
+        \( -name "capecoastcastle-*.log" ! -name "capecoastcastle-exceptions-*.log" \) \
+        -o \
+        -name "*.gz" \
+    \) \
+    -exec cp {} "$new_folder"/ \;
 
 # Move to the new folder
 cd "$new_folder" || exit
