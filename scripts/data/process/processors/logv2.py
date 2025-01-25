@@ -15,35 +15,40 @@ def process_log_file(file_path):
                 log_entry = json.loads(line)
                 message = log_entry.get("message", "")
 
-                # Extract fields using simple splitting logic
-                parts = message.split(" ")
-                ip_address = parts[0]
-                timestamp = parts[3][1:]  # Remove the starting '[' from the timestamp
-                request = parts[5][1:]    # Remove the starting '"' from the request
-                path = parts[6]
-                status_code = parts[8]
-                user_agent = " ".join(parts[11:]).strip('"')
+                # Verify the log message contains expected elements
+                if "GET" in message or "POST" in message:
+                    # Extract fields using regex
+                    parts = message.split(" ")
+                    ip_address = parts[0]
+                    timestamp = parts[3][1:]  # Remove starting '['
+                    request = parts[5][1:]    # Remove starting '"'
+                    path = parts[6]
+                    status_code = parts[8]
+                    user_agent = " ".join(parts[11:]).strip('"')
 
-                # Simplified processing for module name
-                module_name = "none"
-                if "/modules/" in path:
-                    module_name = path.split("/modules/")[1].split("/")[0]
+                    # Simplified processing for module name
+                    module_name = "none"
+                    if "/modules/" in path:
+                        module_name = path.split("/modules/")[1].split("/")[0]
 
-                # Default values for data not in logs
-                response_size_gb = "0.00000"
-                device_type = "unknown"
-                browser_name = "unknown"
+                    # Default values for missing data
+                    response_size_gb = "0.00000"
+                    device_type = "unknown"
+                    browser_name = "unknown"
 
-                # Append the data to the log_data list
-                log_data.append([
-                    ip_address,
-                    timestamp.split(":")[0],  # Use date only
-                    module_name,
-                    status_code,
-                    response_size_gb,
-                    device_type,
-                    browser_name,
-                ])
+                    # Append the data to the log_data list
+                    log_data.append([
+                        ip_address,
+                        timestamp.split(":")[0],  # Extract only the date
+                        module_name,
+                        status_code,
+                        response_size_gb,
+                        device_type,
+                        browser_name,
+                    ])
+                else:
+                    # Log skipped lines for debugging
+                    print(f"Skipping line (unexpected format): {message}")
             except Exception as e:
                 print(f"Error processing line: {line.strip()}, Error: {e}")
 
