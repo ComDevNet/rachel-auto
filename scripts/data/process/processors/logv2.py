@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+import re  # Ensure the 're' module is imported
 from datetime import datetime
 from user_agents import parse
 import sys
@@ -18,7 +19,7 @@ def process_log_file(file_path):
                 log_entry = json.loads(line)
                 message = log_entry.get("message", "")
 
-                # Extract details from the log message
+                # Extract details from the log message using regex
                 match = re.search(
                     r'(?P<ip>[\d.]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>GET|POST) (?P<path>[^\s]+) HTTP/1.1" (?P<status_code>\d+) - "(?P<referrer>[^"]*)" "(?P<user_agent>[^"]*)"',
                     message,
@@ -27,7 +28,7 @@ def process_log_file(file_path):
                     groups = match.groupdict()
 
                     # Parse timestamp
-                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
+                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%d")
 
                     # Extract module name from path
                     module_match = re.search(r'/modules/([^/]+)/', groups["path"])
@@ -38,7 +39,7 @@ def process_log_file(file_path):
                     device_type = user_agent.os.family
                     browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
 
-                    # Convert response size to GB (if needed, set to 0 since the logs have '-')
+                    # Set response size to "0.00000" (as the size field is not present in the logs)
                     response_size_gb = "0.00000"
 
                     # Append the data to the log_data list
