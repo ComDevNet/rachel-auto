@@ -63,4 +63,4 @@ echo ""
 read -p "Press Enter to start log file processing..."
 
 # Start log processing
-exec ./scripts/data/all/process/logs.sh
+exec ./scripts/data/all/v1/process/logs.sh
