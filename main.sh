@@ -33,11 +33,11 @@ echo -e "2. VPN           ${GRAY}-| Install and configure the Zero-tier VPN${NC}
 echo -e "3. Data          ${GRAY}-| Collect, Process and Upload the access logs and request file${NC}"
 echo -e "4. System        ${GRAY}-| Change the system settings${NC}"
 echo -e "5. Troubleshoot  ${GRAY}-| Find out what's wrong with your system${NC}"
-echo -e "${RED}5. Exit          ${GRAY}-| Exit the program${NC}"
+echo -e "${RED}6. Exit          ${GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-5): " choice
+read -p "Choose an option (1-6): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
@@ -54,6 +54,9 @@ case $choice in
         ./scripts/system/main.sh
         ;;
     5)
+        ./scripts/troubleshoot/main.sh
+        ;;
+    6)
         ./exit.sh
         ;;
     *)
