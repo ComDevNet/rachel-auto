@@ -1,26 +1,59 @@
 #!/bin/bash
 
-# This script is used to connect to a zerotier network
+# Define color variables
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
 
-#creating a new identity
+# This script is used to connect to a ZeroTier network and ensure no duplicate connections appear.
+
+# Step 1: Stop the ZeroTier service and remove old identities
 sudo systemctl stop zerotier-one
 sudo rm -rf /var/lib/zerotier-one/identity.secret
 sudo rm -rf /var/lib/zerotier-one/identity.public
+
+# Step 2: Start the ZeroTier service and enable it
 sudo systemctl start zerotier-one
 sudo systemctl enable zerotier-one
 
-# Ask the user to input a network ID
+# Step 3: Wait for the ZeroTier service to stabilize
+echo "Waiting for ZeroTier service to stabilize..."
+sleep 5
+
+# Step 4: Ask the user for the network ID
 read -p "Enter the network ID: " network_id
 
-# Join the ZeroTier network
-sudo zerotier-cli join "$network_id"
+# Step 5: Join the ZeroTier network
+echo "Joining the ZeroTier network..."
+join_output=$(sudo zerotier-cli join "$network_id" 2>&1)
 
-# Create a ZeroTier configuration file
-sudo touch "/var/lib/zerotier-one/networks.d/$network_id.conf"
+# Step 6: Check if the join command was successful
+if echo "$join_output" | grep -q "200 join OK"; then
+    echo -e "${GREEN}ZeroTier network joined successfully.${NC}"
+else
+    echo -e "${RED}Failed to join the ZeroTier network. Please check the network ID and try again.${NC}"
+    echo "Error: $join_output"
+    echo "Press Enter to exit..."
+    read -p ""
+    exit 1
+fi
 
-# Display a success message and wait for 5 seconds
-echo "ZeroTier network joined successfully. Returning to main menu..."
-sleep 1.5
+# Step 7: Ensure only one connection is sent to the ZeroTier dashboard
+# Wait for the network to sync before continuing
+echo "Waiting for network sync to complete..."
+sleep 5
 
-# Return to the main script
+# Step 8: Verify connection and display feedback
+network_status=$(sudo zerotier-cli listnetworks | grep "$network_id")
+if echo "$network_status" | grep -q "OK"; then
+    echo -e "${GREEN}Connection is active and synchronized.${NC}"
+else
+    echo -e "${RED}Connection is pending authorization in the ZeroTier dashboard.${NC}"
+fi
+
+# Step 9: Prompt the user to press Enter to return to the main menu
+echo "Press Enter to return to the main menu..."
+read -p ""
+
+# Return to the main menu
 exec ./scripts/vpn/main.sh

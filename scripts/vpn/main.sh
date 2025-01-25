@@ -7,13 +7,13 @@ echo ""
 echo ""
 
 # Display the name of the tool
-figlet -c -t -f 3d "VPN" | lolcat
+figlet -t -f 3d "VPN" | lolcat
 
 echo ""
 
 # A border to cover the description and its centered
 echo  "========================================"
-echo "VPN Connection to the Zerotier Network"
+echo "Connection to the Zerotier Network"
 echo "========================================"
 
 echo ""
