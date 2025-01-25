@@ -1,10 +1,9 @@
 #!/bin/bash
 
 echo ""
-echo "Collecting Log and Request Files"
+echo "Collecting Log Files"
 echo ""
 
-# Collecting the log files
 # Prompt the user for the location of the device
 read -p "Enter the location of the device: " device_location
 # Replace spaces with underscores
@@ -48,41 +47,20 @@ done
 # Move back to the original directory
 cd ..
 
-# move the folder to a folder called logs
-# Check if the "00_LOGS" folder exists, and create it if not
-if [ ! -d "00_DATA" ]; then
-    mkdir "00_DATA"
-fi
-mv "$new_folder" "00_DATA"
-
-# Display a message about the created gzip file
-echo "Logs are ready in the 00_DATA directory."
-echo ""
-
-
-# This collects the request files
-# Specify the www directory
-www_directory="/var/www"
-
-# Create a new folder with location and timestamp
-new_folder="${device_location}_requests_$(date '+%Y_%m_%d')"
-mkdir "$new_folder"
-
-# Copy the "request.txt" file from the www folder to the new folder
-cp "$www_directory/request.txt" "$new_folder/"
-
-# Display a message about the collected file
-echo "'request.txt' is ready in the $new_folder directory."
-echo ""
-
 # Check if the "00_DATA" folder exists, and create it if not
 if [ ! -d "00_DATA" ]; then
     mkdir "00_DATA"
 fi
 
-# Move the new folder to a folder called data
+# Move the log folder to the "00_DATA" directory
 mv "$new_folder" "00_DATA"
 
-echo "Starting Log and Request files processing in 2 second......"
-sleep 2
+# Display a completion message
+echo "Logs are ready in the 00_DATA directory."
+echo ""
+
+# Wait for user input before starting processing
+read -p "Press Enter to start log file processing..."
+
+# Start log processing
 exec ./scripts/data/all/process/logs.sh

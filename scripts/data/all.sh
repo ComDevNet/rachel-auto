@@ -31,5 +31,5 @@ else
     echo -e "${RED}Invalid choice. Please select either 1 or 2.${NC}"
     echo -e "${YELLOW}Returning to the main menu...${NC}"
     sleep 2
-    exec ./main.sh
+    exec ./scripts/data/main.sh
 fi
