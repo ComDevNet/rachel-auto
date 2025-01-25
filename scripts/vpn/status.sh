@@ -13,23 +13,20 @@ echo ""
 echo -e "${YELLOW}Checking current ZeroTier networks...${NC}"
 echo ""
 
-# Fetch all networks
+# Fetch all networks and ensure output is valid
 zerotier_output=$(sudo zerotier-cli listnetworks)
-
-# Ensure the output is not empty
 if [[ -z "$zerotier_output" ]]; then
     echo -e "${RED}No ZeroTier networks found.${NC}"
-    echo ""
     echo -e "${YELLOW}Press Enter to return to the main menu...${NC}"
     read -p ""
     exec ./scripts/vpn/main.sh
 fi
 
-# Parse the output to extract details
-active_networks=$(echo "$zerotier_output" | grep "OK")
+# Extract header and data lines
+data_lines=$(echo "$zerotier_output" | tail -n +2)
 
-# Check if there are active networks
-if [[ -z "$active_networks" ]]; then
+# Check if there are any networks listed
+if [[ -z "$data_lines" ]]; then
     echo -e "${RED}No active ZeroTier networks found.${NC}"
 else
     echo -e "${GREEN}Active ZeroTier Networks:${NC}"
@@ -37,24 +34,24 @@ else
     echo -e "${CYAN}Details for each connection:${NC}"
     echo "--------------------------------------------------------"
 
-    # Loop through each line of active networks
+    # Loop through each line and parse the details
     while IFS= read -r line; do
-        # Extract details
         network_id=$(echo "$line" | awk '{print $1}')
-        network_name=$(echo "$line" | awk '{print $2}')
+        name=$(echo "$line" | awk '{print $2}')
         mac=$(echo "$line" | awk '{print $3}')
         status=$(echo "$line" | awk '{print $4}')
         type=$(echo "$line" | awk '{print $5}')
-        ip_address=$(echo "$line" | awk '{print $6}')
+        ip=$(echo "$line" | awk '{print $6}')
 
-        # Display the details
-        echo -e "${YELLOW}Network ID:${NC} $network_id"
-        echo -e "${YELLOW}Name:${NC} $network_name"
-        echo -e "${YELLOW}MAC:${NC} $mac"
-        echo -e "${YELLOW}Type:${NC} $type"
-        echo -e "${YELLOW}IP Address:${NC} ${GREEN}${ip_address}${NC}"
-        echo "--------------------------------------------------------"
-    done <<< "$active_networks"
+        if [[ "$status" == "OK" ]]; then
+            echo -e "${YELLOW}Network ID:${NC} $network_id"
+            echo -e "${YELLOW}Name:${NC} $name"
+            echo -e "${YELLOW}MAC:${NC} $mac"
+            echo -e "${YELLOW}Type:${NC} $type"
+            echo -e "${YELLOW}IP Address:${NC} ${GREEN}${ip}${NC}"
+            echo "--------------------------------------------------------"
+        fi
+    done <<< "$data_lines"
 fi
 
 echo ""
