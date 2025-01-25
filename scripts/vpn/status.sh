@@ -7,19 +7,38 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
+# Clear the screen and display the title
 echo ""
+
 # Step 1: List Active ZeroTier Networks
 echo -e "${YELLOW}Checking current ZeroTier networks...${NC}"
 echo ""
+
+# Fetch active networks
 active_networks=$(sudo zerotier-cli listnetworks | grep "OK")
 
+# Check if there are active networks
 if [[ -z "$active_networks" ]]; then
     echo -e "${RED}No active ZeroTier networks found.${NC}"
 else
     echo -e "${GREEN}Active ZeroTier Networks:${NC}"
-    echo -e "${CYAN}Network ID          Name                     Status${NC}"
-    echo "--------------------------------------------------"
-    echo "$active_networks" | awk '{printf "%-18s %-25s %s\n", $1, $3, $5}'
+    echo ""
+    echo -e "${CYAN}Details for each active connection:${NC}"
+    echo "--------------------------------------------------------"
+
+    # Loop through each active network and extract details
+    while IFS= read -r line; do
+        network_id=$(echo "$line" | awk '{print $1}')
+        network_name=$(echo "$line" | awk '{print $3}')
+        ip_address=$(sudo zerotier-cli get "$network_id" ip | awk '{print $1}')
+        status=$(echo "$line" | awk '{print $5}')
+
+        echo -e "${YELLOW}Network ID:${NC} $network_id"
+        echo -e "${YELLOW}Name:${NC} $network_name"
+        echo -e "${YELLOW}IP Address:${NC} ${GREEN}${ip_address}${NC}"
+        echo -e "${YELLOW}Status:${NC} ${GREEN}$status${NC}"
+        echo "--------------------------------------------------------"
+    done <<< "$active_networks"
 fi
 
 echo ""
