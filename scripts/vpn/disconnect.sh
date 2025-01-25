@@ -16,13 +16,22 @@ fi
 
 # Disconnect from all ZeroTier networks
 echo -e "${YELLOW}Disconnecting from all ZeroTier networks...${NC}"
-sudo zerotier-cli leave 0.0.0.0
 
-# Check if the command succeeded
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}Successfully disconnected from all ZeroTier networks.${NC}"
+# Get the list of active network IDs
+network_ids=$(sudo zerotier-cli listnetworks | awk '/OK/ {print $1}')
+
+if [[ -z "$network_ids" ]]; then
+    echo -e "${RED}No active networks to disconnect from.${NC}"
 else
-    echo -e "${RED}Error:${NC} Failed to disconnect from ZeroTier networks."
+    # Loop through each network ID and leave the network
+    for network_id in $network_ids; do
+        sudo zerotier-cli leave "$network_id"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}Successfully disconnected from network ID: $network_id${NC}"
+        else
+            echo -e "${RED}Failed to disconnect from network ID: $network_id${NC}"
+        fi
+    done
 fi
 
 # Wait for the user to press Enter before returning to the main menu
