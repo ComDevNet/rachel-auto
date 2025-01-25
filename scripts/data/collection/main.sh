@@ -7,7 +7,7 @@ echo ""
 echo ""
 
 # Display the name of the tool
-figlet -c -t -f 3d "COLLECTION" | lolcat
+figlet -t -f 3d "COLLECTION" | lolcat
 
 echo ""
 
@@ -26,15 +26,13 @@ DARK_GRAY='\033[1;30m'
 
 # Display menu options
 echo -e "1. Start                  ${DARK_GRAY}-| Start Collection process${NC}"
-echo -e "2. Collect Logs           ${DARK_GRAY}-| Collect the logs from the Rachel${NC}"
-echo -e "3. Collect Request File   ${DARK_GRAY}-| Collect the request file from the Rachel${NC}"
-echo -e "4. Data Processing        ${DARK_GRAY}-| Run processing script${NC}"
-echo -e "${GREEN}5. Go Back                ${DARK_GRAY}-| Go back to the main menu${NC}"
-echo -e "${RED}6. Exit                   ${DARK_GRAY}-| Exit the program${NC}"
+echo -e "2. Data Processing        ${DARK_GRAY}-| Run processing script${NC}"
+echo -e "${GREEN}3. Go Back                ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}4. Exit                   ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
-read -p "Choose an option (1-6): " choice
+read -p "Choose an option (1-4): " choice
 
 # Check the user's choice and execute the corresponding script
 case $choice in
@@ -42,18 +40,12 @@ case $choice in
         ./scripts/data/collection/all.sh
         ;;
     2)
-        ./scripts/data/collection/collect-logs.sh
-        ;;
-    3)
-        ./scripts/data/collection/collect-requests.sh
-        ;;
-    4)
         ./scripts/data/process/main.sh
         ;;
-    5)
+    3)
         ./scripts/data/main.sh
         ;;
-    6)
+    4)
         ./exit.sh
         ;;
     *)
