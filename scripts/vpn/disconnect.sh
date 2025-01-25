@@ -18,7 +18,7 @@ fi
 echo -e "${YELLOW}Disconnecting from all ZeroTier networks...${NC}"
 
 # Get the list of active network IDs
-network_ids=$(sudo zerotier-cli listnetworks | awk '/OK/ {print $1}')
+network_ids=$(sudo zerotier-cli listnetworks | awk '/OK/ {print $3}')
 
 if [[ -z "$network_ids" ]]; then
     echo -e "${RED}No active networks to disconnect from.${NC}"
