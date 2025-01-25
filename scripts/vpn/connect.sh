@@ -7,6 +7,7 @@ NC='\033[0m' # No Color
 
 # This script is used to connect to a ZeroTier network and ensure no duplicate connections appear.
 
+echo ""
 # Step 1: Stop the ZeroTier service and remove old identities
 sudo systemctl stop zerotier-one
 sudo rm -rf /var/lib/zerotier-one/identity.secret
