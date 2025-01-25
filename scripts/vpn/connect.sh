@@ -27,11 +27,13 @@ echo ""
 
 # Step 5: Join the ZeroTier network
 echo "Joining the ZeroTier network..."
+echo ""
 join_output=$(sudo zerotier-cli join "$network_id" 2>&1)
 
 # Step 6: Check if the join command was successful
 if echo "$join_output" | grep -q "200 join OK"; then
     echo -e "${GREEN}ZeroTier network joined successfully.${NC}"
+    echo ""
 else
     echo -e "${RED}Failed to join the ZeroTier network. Please check the network ID and try again.${NC}"
     echo "Error: $join_output"
@@ -42,21 +44,23 @@ fi
 
 # Step 7: Wait for authorization
 echo "Waiting for authorization in the ZeroTier dashboard..."
+echo ""
 while true; do
     network_status=$(sudo zerotier-cli listnetworks | grep "$network_id")
     if echo "$network_status" | grep -q "OK"; then
         echo -e "${GREEN}Connection is authorized and active.${NC}"
+        echo ""
         break
     else
         echo -e "${RED}Connection is pending authorization. Please authorize it in the ZeroTier dashboard.${NC}"
         sleep 4
-        clear
     fi
 done
 
 # Step 8: Show active connection
 echo "Active ZeroTier connection details:"
 sudo zerotier-cli listnetworks | grep "$network_id"
+echo ""
 
 # Step 9: Prompt the user to press Enter to return to the main menu
 echo "Press Enter to return to the main menu..."
