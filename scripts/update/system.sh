@@ -19,7 +19,7 @@ echo ""
 echo ""
 
 # Display a message about the update
-echo "${GREEN}System has been updated successfully.${NC}"
+echo -e "${GREEN}System has been updated successfully.${NC}"
 echo ""
 
 # Prompt the user to press Enter before returning to the main menu

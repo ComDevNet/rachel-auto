@@ -20,10 +20,10 @@ git pull
 # Check if the pull was successful
 if [ $? -eq 0 ]; then
     echo ""
-    echo "${GREEN}Script updated successfully.${NC}"
+    echo -e "${GREEN}Script updated successfully.${NC}"
     echo ""
 else
-    echo "${RED}Failed to update the script. Please check for updates manually.${NC}"
+    echo -e "${RED}Failed to update the script. Please check for updates manually.${NC}"
     echo ""
     exit 1
 fi
