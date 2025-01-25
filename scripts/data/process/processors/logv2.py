@@ -1,6 +1,9 @@
 import os
 import csv
 import json
+import re
+from datetime import datetime
+from user_agents import parse
 import sys
 
 
@@ -15,39 +18,49 @@ def process_log_file(file_path):
                 log_entry = json.loads(line)
                 message = log_entry.get("message", "")
 
-                # Verify the log message contains expected elements
-                if "GET" in message or "POST" in message:
-                    # Extract fields using regex
-                    parts = message.split(" ")
-                    ip_address = parts[0]
-                    timestamp = parts[3][1:]  # Remove starting '['
-                    request = parts[5][1:]    # Remove starting '"'
-                    path = parts[6]
-                    status_code = parts[8]
-                    user_agent = " ".join(parts[11:]).strip('"')
+                # Extract fields using regex
+                match = re.search(
+                    r'(?P<ip>[\d.:]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>GET|POST) (?P<path>[^\s]+) HTTP/1.1" (?P<status_code>\d+) - "(?P<referrer>[^"]*)" "(?P<user_agent>[^"]*)"',
+                    message,
+                )
+                if match:
+                    groups = match.groupdict()
 
-                    # Simplified processing for module name
+                    # Extract IP address and skip unwanted IPs
+                    ip_address = groups["ip"]
+                    if ip_address.startswith("::ffff:"):
+                        continue
+
+                    # Parse timestamp
+                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
+
+                    # Extract module name and skip unwanted paths
+                    path = groups["path"]
                     module_name = "none"
                     if "/modules/" in path:
                         module_name = path.split("/modules/")[1].split("/")[0]
+                    if "http://oc4d.cdn/categories" in path:
+                        continue
 
-                    # Default values for missing data
+                    # Parse user agent
+                    user_agent = parse(groups["user_agent"])
+                    device_type = user_agent.os.family if user_agent.os.family else "unknown"
+                    browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
+
+                    # Default response size
                     response_size_gb = "0.00000"
-                    device_type = "unknown"
-                    browser_name = "unknown"
 
                     # Append the data to the log_data list
                     log_data.append([
                         ip_address,
-                        timestamp.split(":")[0],  # Extract only the date
+                        timestamp,
                         module_name,
-                        status_code,
+                        groups["status_code"],
                         response_size_gb,
                         device_type,
                         browser_name,
                     ])
                 else:
-                    # Log skipped lines for debugging
                     print(f"Skipping line (unexpected format): {message}")
             except Exception as e:
                 print(f"Error processing line: {line.strip()}, Error: {e}")
@@ -59,21 +72,31 @@ def save_processed_log_file(folder_path, file_path, log_data):
     """Save the processed log data to a CSV file."""
     os.makedirs(folder_path, exist_ok=True)
     processed_file_path = os.path.join(folder_path, f"{os.path.splitext(os.path.basename(file_path))[0]}.csv")
-    with open(processed_file_path, 'w', encoding='utf-8', newline='') as output_file:
-        csv_writer = csv.writer(output_file)
-        csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
-        csv_writer.writerows(log_data)
+    if log_data:  # Only write files that have data
+        with open(processed_file_path, 'w', encoding='utf-8', newline='') as output_file:
+            csv_writer = csv.writer(output_file)
+            csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+            csv_writer.writerows(log_data)
 
 
-def create_master_csv(folder_path, all_log_data):
-    """Create a master CSV file combining all log data."""
+def create_master_csv(folder_path):
+    """Create a master CSV file combining all processed CSV data."""
     master_csv_path = os.path.join(folder_path, "summary.csv")
     os.makedirs(folder_path, exist_ok=True)
+
     with open(master_csv_path, 'w', encoding='utf-8', newline='') as master_csv:
         csv_writer = csv.writer(master_csv)
         csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
-        for log_data in all_log_data:
-            csv_writer.writerows(log_data)
+
+        # Combine all individual CSVs into the master CSV
+        for root, _, files in os.walk(folder_path):
+            for file in files:
+                if file.endswith(".csv") and file != "summary.csv":
+                    file_path = os.path.join(root, file)
+                    with open(file_path, 'r', encoding='utf-8') as csv_file:
+                        csv_reader = csv.reader(csv_file)
+                        next(csv_reader)  # Skip header
+                        csv_writer.writerows(csv_reader)
 
 
 if __name__ == '__main__':
@@ -85,7 +108,6 @@ if __name__ == '__main__':
         print(f"Error: Folder '{folder_path}' does not exist.")
         sys.exit(1)
 
-    all_log_data = []
     total_files = sum(len(files) for _, _, files in os.walk(folder_path))
     processed_files = 0
 
@@ -95,9 +117,10 @@ if __name__ == '__main__':
                 file_path = os.path.join(root, file)
                 log_data = process_log_file(file_path)
                 save_processed_log_file(processed_folder_path, file_path, log_data)
-                all_log_data.extend(log_data)
                 processed_files += 1
                 print(f"\rProcessing files: {processed_files}/{total_files} [{int((processed_files / total_files) * 100)}%]", end='', flush=True)
 
-    create_master_csv(processed_folder_path, all_log_data)
+    # Create the master summary CSV
+    create_master_csv(processed_folder_path)
+
     print("\nProcessing completed. All log files have been processed.")
