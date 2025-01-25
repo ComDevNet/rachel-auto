@@ -9,8 +9,7 @@ echo ""
 echo ""
 
 # Display the name of the tool
-figlet -c -t -f 3d "UPDATE" | lolcat
-
+figlet -t -f 3d "UPDATE" | lolcat
 echo ""
 
 # A border to cover the description and its centered

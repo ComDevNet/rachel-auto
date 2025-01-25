@@ -8,6 +8,11 @@ current_directory=$(pwd)
 # Move to the directory of the script
 cd "$(dirname "$0")" || exit
 
+# Color variables
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 # Pull the latest changes from GitHub
 git reset --hard HEAD
 git pull
@@ -15,9 +20,11 @@ git pull
 # Check if the pull was successful
 if [ $? -eq 0 ]; then
     echo ""
-    echo "Script updated successfully."
+    echo "${GREEN}Script updated successfully.${NC}"
+    echo ""
 else
-    echo "Failed to update the script. Please check for updates manually."
+    echo "${RED}Failed to update the script. Please check for updates manually.${NC}"
+    echo ""
     exit 1
 fi
 
@@ -35,11 +42,15 @@ sudo chmod +x scripts/data/collection/*.sh
 sudo chmod +x scripts/data/process/*.sh
 sudo chmod +x scripts/data/process/all/*.sh
 sudo chmod +x scripts/data/upload/*.sh
+sudo chmod +x scripts/troubleshoot/*.sh
 
 # Return to the original directory
 cd "$current_directory"
 
-# Sleep and return to the main menu
-echo "Returning to the main menu..."
-sleep 1.5
+# Prompt the user to press Enter before returning to the main menu
+echo ""
+echo "Press Enter to return to the main menu..."
+read -p ""
+
+# Return to the main menu
 exec ./scripts/update/main.sh
