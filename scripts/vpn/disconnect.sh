@@ -16,7 +16,7 @@ fi
 
 # Disconnect from all ZeroTier networks
 echo -e "${YELLOW}Disconnecting from all ZeroTier networks...${NC}"
-zerotier-cli leave 0.0.0.0
+sudo zerotier-cli leave 0.0.0.0
 
 # Check if the command succeeded
 if [ $? -eq 0 ]; then
