@@ -58,6 +58,10 @@ def create_master_csv(folder_path, all_log_data):
     """Create a master CSV file combining all log data."""
     master_csv_path = os.path.join(folder_path, "summary.csv")
 
+    # Create the folder if it doesn't exist
+    os.makedirs(folder_path, exist_ok=True)
+
+    # Write data to the master CSV
     with open(master_csv_path, 'w', encoding='utf-8', newline='') as master_csv:
         csv_writer = csv.writer(master_csv)
         csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
@@ -72,6 +76,7 @@ if __name__ == '__main__':
     folder_path = os.path.join("00_DATA", selected_folder)
     processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
 
+    # Check if the folder exists
     if not os.path.exists(folder_path):
         print(f"Error: Folder '{folder_path}' does not exist.")
         sys.exit(1)
@@ -89,7 +94,7 @@ if __name__ == '__main__':
 
                 # Save the processed log file
                 save_processed_log_file(processed_folder_path, file_path, log_data)
-                all_log_data.extend(log_data)
+                all_log_data.append(log_data)
 
                 # Update progress
                 processed_files += 1

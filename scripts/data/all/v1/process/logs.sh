@@ -31,11 +31,11 @@ if [[ ! $folder_number =~ ^[1-9][0-9]*$ || $folder_number -gt ${#folders[@]} ]];
 fi
 
 # Construct the full path to the selected folder
-selected_folder=${folders[$((folder_number-1))]}
+selected_folder=${folders[$((folder_number-1))]#00_DATA/}
 
 # Confirm folder selection before processing
 echo ""
-read -p "You selected '${selected_folder#00_DATA/}'. Press Enter to confirm and start processing..."
+read -p "You selected '${selected_folder}'. Press Enter to confirm and start processing..."
 
 # Run the Python script with the selected folder as an argument
 python3 "$python_script_path" "$selected_folder"
