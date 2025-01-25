@@ -1,10 +1,35 @@
 #!/bin/bash
 
-# clear the screen
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Clear the screen
 clear
 
-echo "Starting Data Collection and Processing in 2 seconds........"
-sleep 2
+echo ""
 
-exec ./scripts/data/all/collection.sh
+echo -e "${YELLOW}Choose an option:${NC}"
+echo "1. V1 - Server v4"
+echo "2. V2 - Server v5"
+echo ""
 
+# Prompt user for their choice
+read -p "Enter your choice (1 or 2): " user_choice
+
+# Handle user input
+if [[ "$user_choice" == "1" ]]; then
+    echo -e "${YELLOW}Starting Data Collection and Processing (V1) in 2 seconds...${NC}"
+    sleep 2
+    exec ./scripts/data/all/v1/collection.sh
+elif [[ "$user_choice" == "2" ]]; then
+    echo -e "${YELLOW}Starting Data Collection and Processing (V2) in 2 seconds...${NC}"
+    sleep 2
+    exec ./scripts/data/all/v2/collection.sh
+else
+    echo -e "${RED}Invalid choice. Please select either 1 or 2.${NC}"
+    echo -e "${YELLOW}Returning to the main menu...${NC}"
+    sleep 2
+    exec ./main.sh
+fi
