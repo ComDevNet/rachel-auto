@@ -43,10 +43,6 @@ python3 "$python_script_path" "$selected_folder"
 echo ""
 echo "Processing completed."
 
-# Prompt to proceed with request file processing
-read -p "Press Enter to start processing the request file..."
-exec ./scripts/data/all/process/requests.sh
-
 # After all processing is complete, ask the user if they want to upload the data
 echo ""
 read -p "Do you want to upload the processed data? (y/n): " upload_choice
