@@ -5,7 +5,7 @@ from user_agents import parse
 from io import StringIO
 from datetime import datetime
 import re
-import sys  # Import sys module to access command line arguments
+import sys  # To access command-line arguments
 
 def process_log_file(file_path):
     log_data = []  # Reset log_data for each conversion
@@ -26,10 +26,7 @@ def process_log_file(file_path):
 
                 # Extract the module name from the path
                 module_name_match = re.search(r'/modules/([^/]+)/', cleaned_path)
-                if module_name_match:
-                    module_name = module_name_match.group(1)
-                else:
-                    module_name = 'none'
+                module_name = module_name_match.group(1) if module_name_match else 'none'
 
                 user_agent = parse(user_agent_string)
 
@@ -39,15 +36,13 @@ def process_log_file(file_path):
                 browser_name = user_agent.browser.family if user_agent.browser.family else 'unknown'
 
                 # Convert response size from bytes to Gigabytes
-                response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f") 
+                response_size_gb = format(int(response_size_bytes) / 1073741824, ".5f")
 
                 log_data.append([ip_address, timestamp, module_name, status_code, response_size_gb, device_type, browser_name])
 
     return log_data
 
-def save_processed_log_file(selected_folder, file_path, log_data):
-    processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
-    
+def save_processed_log_file(processed_folder_path, file_path, log_data):
     # Create the 'PROCESSED' folder if it doesn't exist
     if not os.path.exists(processed_folder_path):
         os.makedirs(processed_folder_path)
@@ -59,19 +54,25 @@ def save_processed_log_file(selected_folder, file_path, log_data):
     csv_writer.writerows(log_data)
 
     output_csv.seek(0)
-    
+
     # Save the processed log file with the same name as the original log file but with a .csv extension
     processed_file_path = os.path.join(processed_folder_path, f"{os.path.splitext(os.path.basename(file_path))[0]}.csv")
     with open(processed_file_path, 'w', encoding='utf-8') as output_file:
         output_file.write(output_csv.getvalue())
 
-def create_master_csv(selected_folder, all_log_data):
-    master_csv_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder, "summary.csv")
+def create_master_csv(processed_folder_path, all_log_data):
+    # Define the path for the master CSV
+    master_csv_path = os.path.join(processed_folder_path, "summary.csv")
 
+    # Create the 'PROCESSED' folder if it doesn't exist
+    if not os.path.exists(processed_folder_path):
+        os.makedirs(processed_folder_path)
+
+    # Write data to the master CSV
     with open(master_csv_path, 'w', encoding='utf-8') as master_csv:
         csv_writer = csv.writer(master_csv)
         csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
-        
+
         for log_data in all_log_data:
             csv_writer.writerows(log_data)
 
@@ -79,6 +80,7 @@ if __name__ == '__main__':
     # Specify the folder path to process
     selected_folder = sys.argv[1]  # Access the argument passed from the command line
     folder_path = os.path.join("00_DATA", selected_folder)
+    processed_folder_path = os.path.join("00_DATA", "00_PROCESSED", selected_folder)
 
     # Get the total number of files for the progress bar
     total_files = sum([len(files) for _, _, files in os.walk(folder_path)])
@@ -86,14 +88,14 @@ if __name__ == '__main__':
 
     # Process each access.log file in the folder
     progress = 0
-    for i, (root, dirs, files) in enumerate(os.walk(folder_path)):
+    for root, dirs, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".log"):
                 file_path = os.path.join(root, file)
                 log_data = process_log_file(file_path)
 
                 # Save the result to a separate CSV file for each log file
-                save_processed_log_file(selected_folder, file_path, log_data)
+                save_processed_log_file(processed_folder_path, file_path, log_data)
                 all_log_data.append(log_data)
 
                 # Update progress bar
@@ -101,7 +103,7 @@ if __name__ == '__main__':
                 percentage = (progress / total_files) * 100
                 print(f"\rProcessing files: [{int(percentage)}%] [{'#' * int(percentage / 2)}]", end='', flush=True)
 
-# Create the master CSV file
-    create_master_csv(selected_folder, all_log_data)
+    # Create the master CSV file
+    create_master_csv(processed_folder_path, all_log_data)
 
     print("\nLog files processed successfully.")
