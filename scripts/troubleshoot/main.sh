@@ -26,11 +26,11 @@ GREEN='\033[0;32m'
 
 # Display menu options
 echo -e "1. OC4D           ${DARK_GRAY}-| Check oc4d status${NC}"
-echo -e "2. Kolibri      ${DARK_GRAY}-| Check kolibri status${NC}"
+echo -e "2. Kolibri         ${DARK_GRAY}-| Check kolibri status${NC}"
 echo -e "3. Storage        ${DARK_GRAY}-| Check storage${NC}"
 echo -e "4. Wifi           ${DARK_GRAY}-| Check hostapd${NC}"
-echo -e "${GREEN}5. Go Back           ${DARK_GRAY}-| Go back to the main menu${NC}"
-echo -e "${RED}6. Exit              ${DARK_GRAY}-| Exit the program${NC}"
+echo -e "${GREEN}5. Go Back        ${DARK_GRAY}-| Go back to the main menu${NC}"
+echo -e "${RED}6. Exit           ${DARK_GRAY}-| Exit the program${NC}"
 
 echo -e "${NC}"
 # Prompt the user for input
