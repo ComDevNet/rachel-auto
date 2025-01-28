@@ -6,7 +6,6 @@ from datetime import datetime
 from user_agents import parse
 import sys
 
-
 def process_log_file(file_path):
     """Process a single log file and extract data."""
     log_data = []
@@ -18,27 +17,39 @@ def process_log_file(file_path):
                 log_entry = json.loads(line)
                 message = log_entry.get("message", "")
 
-                # Extract fields using regex
+                # Updated regex to capture "size" (digits or '-') after status code:
                 match = re.search(
-                    r'(?P<ip>[\d.:]+) - - \[(?P<timestamp>[^\]]+)\] "(?P<request>GET|POST) (?P<path>[^\s]+) HTTP/1.1" (?P<status_code>\d+) - "(?P<referrer>[^"]*)" "(?P<user_agent>[^"]*)"',
-                    message,
+                    r'(?P<ip>[\d.:]+)\s-\s-\s\['
+                    r'(?P<timestamp>[^\]]+)\]\s"'
+                    r'(?P<request>GET|POST)\s'
+                    r'(?P<path>[^\s]+)\sHTTP/1.1"\s'
+                    r'(?P<status_code>\d+)\s'
+                    r'(?P<size>\d+|-)\s'
+                    r'"(?P<referrer>[^"]*)"\s'
+                    r'"(?P<user_agent>[^"]*)"',
+                    message
                 )
                 if match:
                     groups = match.groupdict()
 
-                    # Extract IP address and skip unwanted IPs
+                    # Extract IP address
                     ip_address = groups["ip"]
+                    # Strip off "::ffff:" if present
                     if ip_address.startswith("::ffff:"):
-                        continue
+                        ip_address = ip_address[7:]
 
-                    # Parse timestamp
-                    timestamp = datetime.strptime(groups["timestamp"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
+                    # Parse timestamp (assumes format "2025-01-28 12:34:56.789")
+                    timestamp_str = groups["timestamp"]
+                    timestamp = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")
+                    access_date = timestamp.strftime("%Y-%m-%d")
 
-                    # Extract module name and skip unwanted paths
+                    # Extract module name (if any)
                     path = groups["path"]
                     module_name = "none"
                     if "/modules/" in path:
                         module_name = path.split("/modules/")[1].split("/")[0]
+
+                    # Optionally skip if path contains something specific
                     if "http://oc4d.cdn/categories" in path:
                         continue
 
@@ -47,13 +58,18 @@ def process_log_file(file_path):
                     device_type = user_agent.os.family if user_agent.os.family else "unknown"
                     browser_name = user_agent.browser.family if user_agent.browser.family else "unknown"
 
-                    # Default response size
-                    response_size_gb = "0.00000"
+                    # Convert size (bytes) to GB with 10 decimals
+                    raw_size = groups["size"]
+                    if raw_size.isdigit():
+                        size_in_bytes = int(raw_size)
+                    else:
+                        size_in_bytes = 0
+                    response_size_gb = f"{(size_in_bytes / 1073741824):.10f}"
 
                     # Append the data to the log_data list
                     log_data.append([
                         ip_address,
-                        timestamp,
+                        access_date,
                         module_name,
                         groups["status_code"],
                         response_size_gb,
@@ -61,6 +77,7 @@ def process_log_file(file_path):
                         browser_name,
                     ])
                 else:
+                    # If line doesn't match, we skip but optionally print a warning
                     print(f"Skipping line (unexpected format): {message}")
             except Exception as e:
                 print(f"Error processing line: {line.strip()}, Error: {e}")
@@ -71,11 +88,23 @@ def process_log_file(file_path):
 def save_processed_log_file(folder_path, file_path, log_data):
     """Save the processed log data to a CSV file."""
     os.makedirs(folder_path, exist_ok=True)
-    processed_file_path = os.path.join(folder_path, f"{os.path.splitext(os.path.basename(file_path))[0]}.csv")
+    processed_file_path = os.path.join(
+        folder_path,
+        f"{os.path.splitext(os.path.basename(file_path))[0]}.csv"
+    )
+    
     if log_data:  # Only write files that have data
         with open(processed_file_path, 'w', encoding='utf-8', newline='') as output_file:
             csv_writer = csv.writer(output_file)
-            csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+            csv_writer.writerow([
+                'IP Address',
+                'Access Date',
+                'Module Viewed',
+                'Status Code',
+                'Data Saved (GB)',
+                'Device Used',
+                'Browser Used'
+            ])
             csv_writer.writerows(log_data)
 
 
@@ -86,7 +115,15 @@ def create_master_csv(folder_path):
 
     with open(master_csv_path, 'w', encoding='utf-8', newline='') as master_csv:
         csv_writer = csv.writer(master_csv)
-        csv_writer.writerow(['IP Address', 'Access Date', 'Module Viewed', 'Status Code', 'Data Saved (GB)', 'Device Used', 'Browser Used'])
+        csv_writer.writerow([
+            'IP Address',
+            'Access Date',
+            'Module Viewed',
+            'Status Code',
+            'Data Saved (GB)',
+            'Device Used',
+            'Browser Used'
+        ])
 
         # Combine all individual CSVs into the master CSV
         for root, _, files in os.walk(folder_path):
@@ -118,7 +155,12 @@ if __name__ == '__main__':
                 log_data = process_log_file(file_path)
                 save_processed_log_file(processed_folder_path, file_path, log_data)
                 processed_files += 1
-                print(f"\rProcessing files: {processed_files}/{total_files} [{int((processed_files / total_files) * 100)}%]", end='', flush=True)
+                print(
+                    f"\rProcessing files: {processed_files}/{total_files} "
+                    f"[{int((processed_files / total_files) * 100)}%]",
+                    end='',
+                    flush=True
+                )
 
     # Create the master summary CSV
     create_master_csv(processed_folder_path)
