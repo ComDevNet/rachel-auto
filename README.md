@@ -40,4 +40,4 @@ chmod +x install.sh
 - [x] Change Wifi Name
 - [x] Add wifi Password
 - [x] Upload Data to Server
-- [ ] Troubleshoot System
+- [x] Troubleshoot System
