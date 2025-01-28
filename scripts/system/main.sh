@@ -25,7 +25,7 @@ GREEN='\033[0;32m'
 DARK_GRAY='\033[1;30m'
 
 # Display menu options
-echo -e "1. Change Interface            ${DARK_GRAY}-| Change the files in the www folder${NC}"
+echo -e "1. Modem            ${DARK_GRAY}-| Connect to a USB Modem${NC}"
 echo -e "2. WIFI Name                   ${DARK_GRAY}-| Change the WIFI signal name${NC}"
 echo -e "3. Wifi Password               ${DARK_GRAY}-| Change the WIFI signal password${NC}"
 echo -e "4. Raspberry Pi Configuration  ${DARK_GRAY}-| Run raspi-config${NC}"
@@ -41,7 +41,7 @@ read -p "Choose an option (1-8): " choice
 # Check the user's choice and execute the corresponding script
 case $choice in
     1)
-        ./scripts/system/change-interface.sh
+        ./scripts/system/modem.sh
         ;;
     2) 
         ./scripts/system/wifi-name.sh
