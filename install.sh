@@ -65,12 +65,13 @@ sudo chmod +x scripts/vpn/*.sh
 sudo chmod +x scripts/update/*.sh
 sudo chmod +x scripts/system/*.sh
 sudo chmod +x scripts/data/*.sh
-sudo chmod +x scripts/data/all/*.sh
-sudo chmod +x scripts/data/all/process/*.sh
+sudo chmod +x scripts/data/all/v1/*.sh
+sudo chmod +x scripts/data/all/v1/process/*.sh
+sudo chmod +x scripts/data/all/v2/*.sh
+sudo chmod +x scripts/data/all/v2/process/*.sh
 sudo chmod +x scripts/data/collection/*.sh
 sudo chmod +x scripts/data/process/*.sh
 sudo chmod +x scripts/data/upload/*.sh
 sudo chmod +x scripts/troubleshoot/*.sh
-
 
 exec ./main.sh
