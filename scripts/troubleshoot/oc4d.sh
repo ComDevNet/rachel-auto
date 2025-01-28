@@ -16,8 +16,11 @@ case "$answer" in
     sudo systemctl restart oc4d.service
     echo "Restart complete. Checking status again..."
     sudo systemctl status oc4d.service
+    exec ./scripts/troubleshoot/main.sh
     ;;
   * )
-    echo "Not restarting. Exiting."
+    echo "Not restarting. Returning to main menu..."
+    sleep 2
+    exec ./scripts/troubleshoot/main.sh
     ;;
 esac
