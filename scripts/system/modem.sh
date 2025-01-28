@@ -13,19 +13,31 @@
 
 pause_for_confirmation() {
   local prompt_msg="$1"
-  read -r -p "$prompt_msg [y/N]: " answer
-  case "$answer" in
-    [Yy]* ) return 0 ;;  # user said yes
-    * )     echo "Cancelled."; exit 1 ;;
-  esac
+  while true; do
+    read -r -p "$prompt_msg [y/N]: " answer
+    case "$answer" in
+      [Yy]* ) 
+        break  # user confirmed, break out of the loop and continue the script
+        ;;
+      [Nn]* | "" )
+        echo "Please do any required steps or checks manually, then press 'y' to continue."
+        echo "Waiting..."
+        # We simply loop here until the user presses 'y'
+        ;;
+      * )
+        echo "Please answer 'y' or 'n'."
+        ;;
+    esac
+  done
 }
+
 
 ########################
 # 1) Check for mmcli
 ########################
 if ! command -v mmcli &> /dev/null; then
   echo "Error: 'mmcli' command not found. Please install ModemManager."
-  exit 1
+  exit 1  # Fatal error: can't proceed at all
 fi
 
 echo "mmcli is installed: $(mmcli -V)"
@@ -45,7 +57,7 @@ modem_list=$(sudo mmcli --list-modems 2>&1)
 echo "List of modems:"
 echo "$modem_list"
 
-# If no modems found, exit
+# If no modems found, exit (fatal)
 if echo "$modem_list" | grep -q "No modems were found"; then
   echo "No modems found. Please ensure your USB modem is plugged in."
   exit 1
@@ -61,8 +73,12 @@ echo "Which modem index do you want to manage?"
 # We can parse out the last digit as the modem index. Or ask the user to specify.
 read -r -p "Enter modem index (e.g. 0): " MODEM_INDEX
 if [ -z "$MODEM_INDEX" ]; then
-  echo "No modem index provided. Exiting."
-  exit 1
+  echo "No modem index provided. Nothing to manage at the moment."
+  # Instead of exiting, we just loop forever until user provides it
+  while [ -z "$MODEM_INDEX" ]; do
+    echo "Please enter a valid modem index to continue."
+    read -r -p "Modem index: " MODEM_INDEX
+  done
 fi
 
 pause_for_confirmation "Use modem index $MODEM_INDEX and continue?"
@@ -74,15 +90,24 @@ echo "Fetching modem info..."
 modem_info=$(sudo mmcli --modem="$MODEM_INDEX" 2>&1)
 if echo "$modem_info" | grep -iq "error"; then
   echo "Error fetching modem info. Please check the index or connections."
-  exit 1
+  # We won't exit. We'll loop until the user fixes it or chooses to skip
+  while echo "$modem_info" | grep -iq "error"; do
+    echo "Please fix any issues (check USB cable, etc.) or pick another modem index."
+    pause_for_confirmation "When ready, press 'y' to try again."
+
+    # let them re-enter the modem index if they want to
+    read -r -p "Enter a new modem index or press Enter to reuse $MODEM_INDEX: " NEW_INDEX
+    [ -n "$NEW_INDEX" ] && MODEM_INDEX="$NEW_INDEX"
+
+    echo "Trying again with modem index $MODEM_INDEX..."
+    modem_info=$(sudo mmcli --modem="$MODEM_INDEX" 2>&1)
+  done
 fi
 
 echo "$modem_info"
 pause_for_confirmation "Continue?"
 
 # A quick way to see if modem is connected:
-# We can parse the status from the mmcli output. 
-# If "state: connected" or "Status: connected" is present, assume it's online.
 echo "Checking modem state..."
 modem_state=$(echo "$modem_info" | grep -i "state" | grep -oE "connected|connecting|registered|disabled|enabling|enabled|failed|unknown")
 if [ -z "$modem_state" ]; then
@@ -126,12 +151,8 @@ pause_for_confirmation "Continue to check final connection details?"
 ########################
 # 6) Check current bearer (IP type)
 ########################
-# If the modem is connected, it will usually have a bearer (e.g. bearer 0).
-# We can parse it from the lines containing 'bearer' references.
 bearer_line=$(echo "$modem_info" | grep -iE 'Bearer.*\/Modem')
 if [ -n "$bearer_line" ]; then
-  # Extract the numeric part from e.g. '/org/freedesktop/ModemManager1/Bearer/0'
-  # or just pick the last token:
   bearer_id=$(echo "$bearer_line" | awk -F'/' '{print $NF}')
   echo "Detected bearer ID: $bearer_id"
   
@@ -139,7 +160,7 @@ if [ -n "$bearer_line" ]; then
   bearer_info=$(sudo mmcli --bearer="$bearer_id" 2>&1)
   echo "$bearer_info"
   
-  # Optional: parse out IP type or addresses
+  # parse out IP type or addresses
   ip_family=$(echo "$bearer_info" | grep -oE "ipv[46]{1,2}")
   [ -z "$ip_family" ] && ip_family="unknown"
   
@@ -148,7 +169,7 @@ else
   echo "No bearer found. The modem might not be fully connected."
 fi
 
-pause_for_confirmation "Done checking details. Exit now?"
+pause_for_confirmation "Done checking details. Return to main menu?"
 
 echo "Returning to main menu..."
 sleep 2
