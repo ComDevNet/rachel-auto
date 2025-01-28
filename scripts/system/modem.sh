@@ -37,7 +37,8 @@ pause_for_confirmation() {
 ########################
 if ! command -v mmcli &> /dev/null; then
   echo "Error: 'mmcli' command not found. Please install ModemManager."
-  exit 1  # Fatal error: can't proceed at all
+  sleep 2
+  exec ./scripts/system/main.sh 
 fi
 
 echo "mmcli is installed: $(mmcli -V)"
@@ -60,7 +61,8 @@ echo "$modem_list"
 # If no modems found, exit (fatal)
 if echo "$modem_list" | grep -q "No modems were found"; then
   echo "No modems found. Please ensure your USB modem is plugged in."
-  exit 1
+  sleep 2
+  exec ./scripts/system/main.sh
 fi
 
 pause_for_confirmation "Continue?"
